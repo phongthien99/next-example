@@ -20,7 +20,8 @@ description: "Task list template for feature implementation"
 - **Single project**: `src/`, `tests/` at repository root
 - **Web app**: `backend/src/`, `frontend/src/`
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Clean Architecture layers**: `components/` (Presentation), `hooks/` (Application), `core/` (Domain), `repositories/` (Infrastructure)
+- Paths shown below assume single project with Clean Architecture - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -57,14 +58,19 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-Examples of foundational tasks (adjust based on your project):
+Examples of foundational tasks (adjust based on your project and Clean Architecture):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T004 Setup shared UI components in src/components/ui/ (button, input, etc.)
+- [ ] T005 [P] Create base utility functions in src/lib/utils.ts
+- [ ] T006 [P] Setup React Query provider in src/app/providers.tsx
+- [ ] T007 Configure error boundary component structure
+- [ ] T008 Setup environment configuration (.env.local template)
+- [ ] T009 [P] Create shared TypeScript types/interfaces (if cross-feature)
+- [ ] T010 Setup testing infrastructure (Vitest config, MSW handlers)
+
+**Clean Architecture Foundation** (if applicable to multiple features):
+- [ ] T011 [P] Create base repository interface pattern documentation
+- [ ] T012 [P] Setup shared API client wrapper in src/lib/api-client.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -83,16 +89,37 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
 
-### Implementation for User Story 1
+### Implementation for User Story 1 (Clean Architecture Layers)
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+**Domain Layer (Core Business Logic)**:
+- [ ] T012 [P] [US1] Create [Entity1] domain model in src/app/[feature]/models/[Entity1].ts
+- [ ] T013 [P] [US1] Create [Entity2] domain model in src/app/[feature]/models/[Entity2].ts
+- [ ] T014 [P] [US1] Implement [Feature]Logic pure functions in src/app/[feature]/core/[Feature]Logic.ts
 
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Data Transfer Objects (DTOs)**:
+- [ ] T015 [P] [US1] Define Zod schemas in src/app/[feature]/dto/[Feature]Types.ts
+
+**Infrastructure Layer (Data Access)**:
+- [ ] T016 [US1] Create I[Feature]Repository interface in src/app/[feature]/repositories/I[Feature]Repository.ts
+- [ ] T017 [P] [US1] Implement Api[Feature]Repository in src/app/[feature]/repositories/Api[Feature]Repository.ts
+- [ ] T018 [P] [US1] Implement LocalStorage[Feature]Repository in src/app/[feature]/repositories/LocalStorage[Feature]Repository.ts
+- [ ] T019 [US1] Create [Feature]RepositoryRegistry in src/app/[feature]/repositories/[Feature]RepositoryRegistry.ts
+
+**Dependency Injection**:
+- [ ] T020 [US1] Create [Feature]RepositoryProvider in src/app/[feature]/providers/[Feature]RepositoryProvider.tsx
+
+**Application Layer (Use Cases)**:
+- [ ] T021 [US1] Implement Use[Feature] hook in src/app/[feature]/hooks/Use[Feature].ts (orchestrates domain + infrastructure)
+
+**Presentation Layer (UI)**:
+- [ ] T022 [US1] Create [Feature]Form component in src/app/[feature]/components/[Feature]Form.tsx
+- [ ] T023 [US1] Create page.tsx route in src/app/[feature]/page.tsx
+- [ ] T024 [US1] Create error.tsx boundary in src/app/[feature]/error.tsx
+
+**Public API**:
+- [ ] T025 [US1] Create index.ts barrel export in src/app/[feature]/index.ts
+
+**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently with all SOLID principles applied
 
 ---
 
@@ -107,12 +134,26 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
 
-### Implementation for User Story 2
+### Implementation for User Story 2 (Clean Architecture Layers)
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+**Domain Layer**:
+- [ ] T026 [P] [US2] Create domain models in src/app/[feature]/models/
+- [ ] T027 [P] [US2] Implement core business logic in src/app/[feature]/core/
+
+**DTOs & Infrastructure**:
+- [ ] T028 [P] [US2] Define Zod schemas in src/app/[feature]/dto/
+- [ ] T029 [US2] Create repository interface in src/app/[feature]/repositories/I[Feature]Repository.ts
+- [ ] T030 [P] [US2] Implement repository implementations (API + localStorage)
+- [ ] T031 [US2] Create repository registry
+
+**DI & Application**:
+- [ ] T032 [US2] Create provider for DI in src/app/[feature]/providers/
+- [ ] T033 [US2] Implement use case hook in src/app/[feature]/hooks/
+
+**Presentation**:
+- [ ] T034 [US2] Create UI components in src/app/[feature]/components/
+- [ ] T035 [US2] Create page.tsx and error.tsx
+- [ ] T036 [US2] Integrate with User Story 1 (if needed, via public APIs only)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -129,11 +170,15 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
 
-### Implementation for User Story 3
+### Implementation for User Story 3 (Clean Architecture Layers)
 
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
+**Follow same Clean Architecture pattern as US1 and US2**:
+- [ ] T037 [P] [US3] Domain models and core logic (models/ + core/)
+- [ ] T038 [P] [US3] DTOs with Zod schemas (dto/)
+- [ ] T039 [US3] Repository interface and implementations (repositories/)
+- [ ] T040 [US3] Dependency injection provider (providers/)
+- [ ] T041 [US3] Use case hook (hooks/)
+- [ ] T042 [US3] UI components and routes (components/ + page.tsx)
 
 **Checkpoint**: All user stories should now be independently functional
 

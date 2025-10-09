@@ -17,21 +17,65 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: TypeScript 5.x with Next.js 15.5.4  
+**Primary Dependencies**: React 19.1.0, Zod 4.1.12, @tanstack/react-query 5.90.2, Radix UI  
+**Storage**: External API endpoint(s) + localStorage for client-side caching (non-sensitive data only)  
+**Testing**: Vitest or Jest (unit), MSW (API mocking), Playwright or Cypress (E2E)  
+**Target Platform**: Web (mobile, tablet, desktop browsers)  
+**Project Type**: Frontend-Only Web Application (Next.js App Router, no backend database)  
+**Performance Goals**: Form validation < 500ms, page load < 2.5s LCP, API response handling < 1s  
+**Constraints**: WCAG 2.1 AA accessibility, Core Web Vitals compliance, external API dependency  
+**Scale/Scope**: [Feature-specific, e.g., single feature, 5-7 files, ~1000 LOC or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### ✅/❌ Principle I: Type Safety First
+- [ ] All components fully typed with TypeScript strict mode
+- [ ] Zod schemas defined for external data boundaries
+- [ ] No `any` types without explicit justification
+
+### ✅/❌ Principle II: Component-Driven Architecture
+- [ ] UI features built as reusable, composable components
+- [ ] Single responsibility principle followed
+- [ ] Clear props interfaces documented
+
+### ✅/❌ Principle III: Frontend-Only Rendering Strategy
+- [ ] Server components used for static page shells and SEO content
+- [ ] Client components used for forms, interactive UI, and API calls
+- [ ] React Query configured for all external API state management
+- [ ] localStorage usage documented (non-sensitive data only)
+
+### ✅/❌ Principle IV: Data Validation & Error Handling
+- [ ] Zod schemas for all external inputs
+- [ ] Error boundaries at appropriate levels
+- [ ] User-facing errors are actionable and friendly
+
+### ✅/❌ Principle V: Performance & Accessibility
+- [ ] Core Web Vitals targets defined (LCP < 2.5s, FID < 100ms, CLS < 0.1)
+- [ ] WCAG 2.1 AA compliance planned
+- [ ] Semantic HTML and ARIA labels in components
+
+### ✅/❌ Principle VI: Clean Architecture with SOLID Principles
+- [ ] All 4 architectural layers identified: Presentation, Application, Domain, Infrastructure
+- [ ] Repository pattern with interface abstraction designed
+- [ ] Dependency Inversion Principle applied (hooks depend on interfaces, not implementations)
+- [ ] Single Responsibility Principle followed (each layer has one responsibility)
+- [ ] Domain layer is framework-independent (pure business logic)
+- [ ] Multiple repository implementations planned (API + localStorage minimum)
+- [ ] Dependency Injection via React Context providers designed
+- [ ] Feature structure follows Clean Architecture pattern from constitution
+
+### ✅/❌ Principle VII: Technology Stack & Architecture Standards
+- [ ] All dependencies align with approved frontend-only technology stack
+- [ ] New dependencies evaluated against decision criteria (no backend libraries)
+- [ ] Bundle size impact considered (Core Web Vitals)
+- [ ] Frontend-only architecture maintained (no database, no Server Actions)
+- [ ] External API endpoints documented and validated
+- [ ] Technology choices documented in Technical Context section
+
+**Status**: [✅ All principles satisfied / ⚠ Violations require justification in Complexity Tracking]
 
 ## Project Structure
 
@@ -48,51 +92,65 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
+
+**Clean Architecture Structure** (Next.js App Router):
 
 ```
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+src/app/[feature]/                # Feature-based routing
+├── page.tsx                      # Route: Next.js page (presentation entry)
+├── error.tsx                     # Error boundary
+├── loading.tsx                   # Loading UI (optional)
+│
+├── components/                   # PRESENTATION LAYER
+│   └── [Feature]Form.tsx         # Client component: UI + form handling
+│
+├── hooks/                        # APPLICATION LAYER (Use Cases)
+│   └── Use[Feature].ts           # Custom hook: orchestrates business flow
+│
+├── core/                         # DOMAIN LAYER (Business Logic)
+│   └── [Feature]Logic.ts         # Pure functions: validation, transformations
+│
+├── repositories/                 # INFRASTRUCTURE LAYER (Data Access)
+│   ├── I[Feature]Repository.ts   # Interface: defines contract (DIP)
+│   ├── Api[Feature]Repository.ts # Implementation: external API
+│   ├── LocalStorage[Feature]Repository.ts  # Implementation: localStorage
+│   └── [Feature]RepositoryRegistry.ts      # Registry: selects implementation
+│
+├── providers/                    # DEPENDENCY INJECTION
+│   └── [Feature]RepositoryProvider.tsx     # React Context for DI
+│
+├── models/                       # DOMAIN MODELS
+│   └── [DomainEntity].ts         # TypeScript classes/interfaces
+│
+├── dto/                          # DATA TRANSFER OBJECTS
+│   └── [Feature]Types.ts         # Zod schemas + inferred types
+│
+└── index.ts                      # Public API: barrel export
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+src/lib/                          # Shared utilities
+├── api-client.ts                 # Base fetch wrapper (if shared)
+└── utils.ts                      # General utilities
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+src/components/ui/                # Reusable UI components
+├── button.tsx
+├── input.tsx
+└── card.tsx                      # Radix UI + Tailwind
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+tests/                            # Test files
+├── unit/                         # Unit tests (core logic, models)
+├── integration/                  # Integration tests (hooks, repositories with MSW)
+└── e2e/                          # E2E tests (user flows)
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Clean Architecture Notes**:
+- **Layer Dependencies**: Presentation → Application → Domain ← Infrastructure
+- **Domain Layer**: Pure business logic, no framework dependencies
+- **Repository Pattern**: All data access through interfaces (IAuthRepository)
+- **Dependency Inversion**: Hooks depend on interfaces, not concrete implementations
+- **Dependency Injection**: Repository implementations injected via React Context
+- **SOLID Principles**: Each layer follows SRP, DIP applied throughout
+- No Server Actions or backend database (frontend-only)
+- Multiple repository implementations (API + localStorage) for flexibility
 
 ## Complexity Tracking
 
