@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { createContext, useContext, ReactNode, useMemo } from 'react';
-import { IAuthRepository } from '../repositories/IAuthRepository';
-import { ApiAuthRepository } from '../repositories/ApiAuthRepository';
-import { LocalStorageAuthRepository } from '../repositories/LocalStorageAuthRepository';
-import { AuthRepositoryType } from '../repositories/AuthRepositoryRegistry';
+import { createContext, useContext, ReactNode, useMemo } from "react";
+import { IAuthRepository } from "../repositories/IAuthRepository";
+import { ApiAuthRepository } from "../repositories/ApiAuthRepository";
+import { LocalStorageAuthRepository } from "../repositories/LocalStorageAuthRepository";
+import { AuthRepositoryType } from "../repositories/AuthRepositoryRegistry";
 
 /**
  * Context để provide AuthRepository instance
@@ -69,8 +69,8 @@ export function useAuthRepository(): IAuthRepository {
 
   if (!context) {
     throw new Error(
-      'useAuthRepository must be used within AuthRepositoryProvider. ' +
-      'Wrap your app with <AuthRepositoryProvider>.'
+      "useAuthRepository must be used within AuthRepositoryProvider. " +
+        "Wrap your app with <AuthRepositoryProvider>.",
     );
   }
 
@@ -82,13 +82,15 @@ export function useAuthRepository(): IAuthRepository {
  */
 function getDefaultRepositoryType(): AuthRepositoryType {
   // 1. Check environment variable
-  if (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_AUTH_MODE) {
+  if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_AUTH_MODE) {
     return process.env.NEXT_PUBLIC_AUTH_MODE as AuthRepositoryType;
   }
 
   // 2. Check localStorage (cho runtime switching)
-  if (typeof window !== 'undefined') {
-    const storedType = localStorage.getItem('auth_repository_type') as AuthRepositoryType;
+  if (typeof window !== "undefined") {
+    const storedType = localStorage.getItem(
+      "auth_repository_type",
+    ) as AuthRepositoryType;
     if (storedType && Object.values(AuthRepositoryType).includes(storedType)) {
       return storedType;
     }
