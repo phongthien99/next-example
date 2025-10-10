@@ -1,60 +1,59 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: 2.20.0 → 3.0.0
-Rationale: MAJOR version bump - Complete architecture paradigm shift from simple layered architecture to Clean Architecture with SOLID principles and Repository pattern
+Version Change: 3.1.0 → 3.2.0
+Rationale: MINOR version bump - Added Package Management section with pnpm guidelines
 
-Modified Principles:
-  - Principle VI: Feature Architecture Pattern (Frontend-Only) → Clean Architecture with SOLID Principles
-    * Removed: Simple layered structure (schemas/, services/, hooks/)
+Modified Sections:
+  - Development Standards
+    * Added: Package Management section
+    * Added: Mandatory pnpm usage (no npm or yarn)
+    * Added: pnpm benefits, commands, and rules
+    * Added: Version pinning strategy
+    * Added: Dependency review checklist
+
+Previous Version Changes:
+  - Version 3.0.0 → 3.1.0 (2025-10-10):
+    * MINOR: Added file organization rules for Next.js special files
+    * Added: File Organization Rules in Principle VI
+    * Added: Thin wrapper pattern for error.tsx and loading.tsx
+  - Version 2.20.0 → 3.0.0 (2025-10-09):
+    * MAJOR: Complete architecture paradigm shift to Clean Architecture with SOLID principles
     * Added: 4-layer Clean Architecture (Presentation, Application, Domain, Infrastructure)
     * Added: Repository pattern with interface abstraction and dependency inversion
     * Added: Multiple repository implementations (API + localStorage)
     * Added: Dependency Injection via React Context providers
-    * Added: Domain models and pure business logic layer
-    * Added: SOLID principles application throughout
-
-  - Principle VII: Technology Stack & Architecture Standards
-    * Updated: Emphasis on Clean Architecture patterns
-    * Added: Repository pattern as core data access strategy
-    * Clarified: No React Query mentioned in actual implementation (uses custom hooks + repositories)
-    * Enhanced: Testing strategy to include repository mocking at interface level
 
 Templates Status:
-  ✅ plan-template.md - Updated with Clean Architecture structure and SOLID principles checklist
-  ✅ spec-template.md - Compatible with Clean Architecture (technology-agnostic)
-  ✅ tasks-template.md - Updated with Clean Architecture task breakdown by layers
-  ✅ checklist-template.md - Compatible (generic template)
+  ✅ plan-template.md - Compatible (no changes needed)
+  ✅ spec-template.md - Compatible (no changes needed)
+  ✅ tasks-template.md - Compatible (no changes needed)
+  ✅ checklist-template.md - Compatible (no changes needed)
 
-Architecture Changes:
-  - FROM: Simple layered (Presentation → Hooks → Services → API)
-  - TO: Clean Architecture (Presentation → Application → Domain ← Infrastructure)
-  - Repository Pattern: All data access through interfaces with DIP
-  - Dependency Injection: React Context for repository implementations
-  - SOLID Principles: Applied at every layer
+Development Standards Changes (3.2.0):
+  - ADDED: Package Management section (mandatory pnpm)
+  - CLARIFIED: pnpm commands for dependency management
+  - DEFINED: Dependency review checklist before adding packages
+  - ADDED: Version pinning strategy
+  - ENFORCED: pnpm-lock.yaml MUST be committed
 
-New Mandatory Layers:
-  - core/ (Domain Layer): Pure business logic, framework-independent
-  - models/ (Domain Models): TypeScript classes/interfaces for entities
-  - repositories/ (Infrastructure): Interface + multiple implementations
-  - providers/ (DI): React Context for dependency injection
-  - dto/ (Data Transfer Objects): Zod schemas replacing simple schemas/
-
-Removed Patterns:
-  - Simple services/ folder (replaced with repositories/)
-  - Direct API calls from hooks (now through repository interfaces)
-  - schemas/ folder (replaced with dto/ for Data Transfer Objects)
+New Guidelines (3.2.0):
+  - MANDATORY: Use pnpm exclusively (no npm or yarn)
+  - Lockfile: pnpm-lock.yaml MUST be in version control
+  - Review: All new dependencies MUST pass 5-point checklist
+  - Update: Batch updates with thorough testing
 
 Follow-up TODOs:
-  - Update any existing features to follow new Clean Architecture pattern
-  - Document migration guide for converting simple layered features to Clean Architecture
-  - Consider adding architectural decision records (ADRs) for future changes
-  - Add example feature demonstrating full Clean Architecture implementation
+  - Document pnpm workspace setup if monorepo is needed
+  - Create pnpm scripts documentation for common tasks
+  - Add CI/CD integration with pnpm caching
 
 Ratification:
   - Original constitution: 2.20.0 (2025-10-09) - Simple layered frontend-only
   - Updated constitution: 3.0.0 (2025-10-09) - Clean Architecture with SOLID principles
-  - Breaking change requires full architectural review for all new features
+  - Updated constitution: 3.1.0 (2025-10-10) - Added file organization rules for Next.js special files
+  - Updated constitution: 3.2.0 (2025-10-10) - Added Package Management section (pnpm mandatory)
+  - MINOR version bump - backward compatible enhancement
 -->
 
 # Next-Soild Project Constitution
@@ -137,11 +136,13 @@ Presentation Layer → Application Layer → Domain Layer ← Infrastructure Lay
 ```
 src/app/[feature]/
 ├── page.tsx                          # Route: Next.js page (presentation entry)
-├── error.tsx                         # Error boundary
-├── loading.tsx                       # Loading UI (optional)
+├── error.tsx                         # Error boundary (Next.js special file)
+├── loading.tsx                       # Loading UI (Next.js special file, optional)
 │
 ├── components/                       # Presentation Layer
-│   └── [Feature]Form.tsx             # Client component: UI + form handling
+│   ├── [Feature]Form.tsx             # Client component: UI + form handling
+│   ├── [Feature]Error.tsx            # Reusable error UI component (optional)
+│   └── [Feature]Loading.tsx          # Reusable loading UI component (optional)
 │
 ├── hooks/                            # Application Layer (Use Cases)
 │   └── Use[Feature].ts               # Custom hook: orchestrates business flow
@@ -166,6 +167,41 @@ src/app/[feature]/
 │
 └── index.ts                          # Public API: barrel export
 ```
+
+**File Organization Rules**:
+
+1. **Next.js Special Files** (MUST be at route level):
+   - `page.tsx`, `layout.tsx`, `error.tsx`, `loading.tsx`, `not-found.tsx`, `route.ts`
+   - These are framework conventions and CANNOT be moved to `components/`
+   - Should be thin wrappers that delegate to feature components
+
+2. **Feature Components** (MUST be in `components/` folder):
+   - `[Feature]Form.tsx` - Main UI component
+   - `[Feature]Error.tsx` - Reusable error UI (delegated from `error.tsx`)
+   - `[Feature]Loading.tsx` - Reusable loading UI (delegated from `loading.tsx`)
+   - All feature-specific UI components
+
+3. **Naming Convention**:
+   - **Special files**: lowercase, no prefix (e.g., `error.tsx`, `loading.tsx`)
+   - **Feature components**: PascalCase with feature prefix (e.g., `SignUpError.tsx`, `SignUpLoading.tsx`)
+
+4. **Best Practice Pattern**:
+   ```typescript
+   // error.tsx (thin wrapper at route level)
+   'use client';
+   import { SignUpError } from './components/SignUpError';
+   
+   export default function SignupErrorBoundary({ error, reset }) {
+     return <SignUpError error={error} reset={reset} />;
+   }
+   
+   // components/SignUpError.tsx (reusable component)
+   export function SignUpError({ error, reset }) {
+     // Full error UI implementation here
+   }
+   ```
+
+**Rationale**: This pattern separates Next.js framework requirements from Clean Architecture. Special files stay at route level for Next.js to recognize them, while actual UI logic lives in testable, reusable components within the Presentation Layer.
 
 **SOLID Principles Application**:
 
@@ -421,6 +457,60 @@ When adding new dependencies or patterns, evaluate against:
 
 ## Development Standards
 
+### Package Management
+
+**Package Manager**: **pnpm** (MANDATORY - do NOT use npm or yarn)
+
+**Why pnpm**:
+- Disk space efficiency: Single global store with hard links
+- Strict dependency resolution: Prevents phantom dependencies
+- Faster installs: Parallel downloads with efficient caching
+- Monorepo support: Native workspace support (future-proof)
+- Security: Strict by default, prevents access to undeclared dependencies
+
+**Commands**:
+```bash
+# Install dependencies
+pnpm install
+
+# Add dependency (production)
+pnpm add <package>
+
+# Add dependency (development)
+pnpm add -D <package>
+
+# Remove dependency
+pnpm remove <package>
+
+# Update dependencies
+pnpm update
+
+# Run scripts
+pnpm dev
+pnpm build
+pnpm start
+```
+
+**Rules**:
+1. **ALWAYS use pnpm** for installing packages - never `npm install` or `yarn add`
+2. **Commit lockfile**: `pnpm-lock.yaml` MUST be committed to git
+3. **No `node_modules` in git**: Already in `.gitignore`
+4. **Workspace protocol**: Use `workspace:*` for monorepo packages (if/when needed)
+5. **Update strategy**: Update dependencies in batches, test thoroughly
+
+**Version Pinning**:
+- **Major versions**: Pin major versions in `package.json` (e.g., `"react": "^19.1.0"`)
+- **Patch updates**: Allow patch updates with `^` or `~`
+- **Breaking changes**: Test all updates in staging before production
+
+**Dependency Review**:
+Before adding ANY new dependency, verify:
+1. Is it actively maintained? (check last commit date)
+2. Does it have TypeScript support? (types included or `@types/*` available)
+3. What's the bundle size impact? (check bundlephobia.com)
+4. Is it frontend-only compatible? (no Node.js-specific APIs)
+5. Does it align with Clean Architecture? (can it integrate with Repository pattern?)
+
 ### Code Quality
 
 - **Formatting**: Consistent code style via Prettier/ESLint (configuration in project root)
@@ -530,4 +620,4 @@ This constitution represents the non-negotiable architectural and quality standa
 
 **Architecture Lock**: This project is **locked to frontend-only architecture with Clean Architecture + SOLID principles**. Any proposal to add backend database, remove Repository pattern, or violate SOLID principles requires MAJOR version bump and complete architecture review.
 
-**Version**: 3.0.0 | **Ratified**: 2025-10-09 | **Last Amended**: 2025-10-09
+**Version**: 3.2.0 | **Ratified**: 2025-10-09 | **Last Amended**: 2025-10-10
