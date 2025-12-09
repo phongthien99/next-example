@@ -3,6 +3,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
+/**
+ * Global Providers - Simple Pattern
+ * No DI framework needed
+ */
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
 

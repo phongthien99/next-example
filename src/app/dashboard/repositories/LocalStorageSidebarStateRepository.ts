@@ -7,14 +7,14 @@
  * @module LocalStorageSidebarStateRepository
  */
 
-import { ISidebarStateRepository } from './ISidebarStateRepository';
-import { SidebarState } from '../dto/DashboardTypes';
-import { validateSidebarState } from '../core/ValidationFunctions';
+import { ISidebarStateRepository } from "./ISidebarStateRepository";
+import { SidebarState } from "../dto/DashboardTypes";
+import { validateSidebarState } from "../core/ValidationFunctions";
 
 /**
  * localStorage key for sidebar state persistence
  */
-const STORAGE_KEY = 'dashboard:sidebarState';
+const STORAGE_KEY = "dashboard:sidebarState";
 
 /**
  * localStorage-based sidebar state repository
@@ -25,7 +25,9 @@ const STORAGE_KEY = 'dashboard:sidebarState';
  * - Provides isAvailable() check for storage availability
  * - Returns null on read errors instead of throwing
  */
-export class LocalStorageSidebarStateRepository implements ISidebarStateRepository {
+export class LocalStorageSidebarStateRepository
+  implements ISidebarStateRepository
+{
   /**
    * Check if localStorage is available
    *
@@ -36,11 +38,11 @@ export class LocalStorageSidebarStateRepository implements ISidebarStateReposito
    */
   isAvailable(): boolean {
     try {
-      const testKey = '__storage_test__';
-      localStorage.setItem(testKey, 'test');
+      const testKey = "__storage_test__";
+      localStorage.setItem(testKey, "test");
       localStorage.removeItem(testKey);
       return true;
-    } catch (error) {
+    } catch {
       // localStorage disabled, private browsing, or quota exceeded
       return false;
     }
@@ -68,7 +70,7 @@ export class LocalStorageSidebarStateRepository implements ISidebarStateReposito
       return validatedState;
     } catch (error) {
       // Invalid JSON, validation error, or localStorage error
-      console.error('Failed to read sidebar state from localStorage:', error);
+      console.error("Failed to read sidebar state from localStorage:", error);
       return null;
     }
   }
@@ -84,20 +86,20 @@ export class LocalStorageSidebarStateRepository implements ISidebarStateReposito
   async setState(state: SidebarState): Promise<void> {
     try {
       if (!this.isAvailable()) {
-        throw new Error('localStorage is not available');
+        throw new Error("localStorage is not available");
       }
 
       // Validate state before persisting
       const validatedState = validateSidebarState(state);
       if (!validatedState) {
-        throw new Error('Invalid sidebar state: validation failed');
+        throw new Error("Invalid sidebar state: validation failed");
       }
 
       const serialized = JSON.stringify(validatedState);
       localStorage.setItem(STORAGE_KEY, serialized);
     } catch (error) {
       // Log error but don't crash the application
-      console.error('Failed to save sidebar state to localStorage:', error);
+      console.error("Failed to save sidebar state to localStorage:", error);
       throw error;
     }
   }
@@ -114,7 +116,7 @@ export class LocalStorageSidebarStateRepository implements ISidebarStateReposito
       }
     } catch (error) {
       // Silent failure - clearing state is not critical
-      console.warn('Failed to clear sidebar state from localStorage:', error);
+      console.warn("Failed to clear sidebar state from localStorage:", error);
     }
   }
 }

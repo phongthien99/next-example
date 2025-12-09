@@ -1,6 +1,11 @@
-import { ISignupRepository } from './ISignupRepository';
-import { SignupInput, SignupOutput, SignupOutputSchema, DuplicateEmailError, SignupAPIError } from '../dto/SignupTypes';
-import { User } from '../models/User';
+import { ISignupRepository } from "./ISignupRepository";
+import {
+  SignupInput,
+  SignupOutputSchema,
+  DuplicateEmailError,
+  SignupAPIError,
+} from "../dto/SignupTypes";
+import { User } from "../models/User";
 
 /**
  * ApiSignupRepository
@@ -14,7 +19,7 @@ export class ApiSignupRepository implements ISignupRepository {
   /**
    * @param baseUrl - Base URL for API (from environment variable)
    */
-  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || '') {
+  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || "") {
     this.baseUrl = baseUrl;
   }
 
@@ -24,9 +29,9 @@ export class ApiSignupRepository implements ISignupRepository {
   async signup(input: SignupInput): Promise<User> {
     try {
       const response = await fetch(`${this.baseUrl}/api/signup`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(input),
       });
@@ -41,8 +46,8 @@ export class ApiSignupRepository implements ISignupRepository {
         const errorData = await response.json();
         throw new SignupAPIError(
           400,
-          errorData.error || 'Validation failed',
-          errorData.details
+          errorData.error || "Validation failed",
+          errorData.details,
         );
       }
 
@@ -50,7 +55,7 @@ export class ApiSignupRepository implements ISignupRepository {
       if (!response.ok) {
         throw new SignupAPIError(
           response.status,
-          `Signup failed with status ${response.status}`
+          `Signup failed with status ${response.status}`,
         );
       }
 
@@ -67,11 +72,18 @@ export class ApiSignupRepository implements ISignupRepository {
         emailVerified: validated.emailVerified,
       };
     } catch (error) {
-      if (error instanceof DuplicateEmailError || error instanceof SignupAPIError) {
+      if (
+        error instanceof DuplicateEmailError ||
+        error instanceof SignupAPIError
+      ) {
         throw error;
       }
       // Network error or unexpected failure
-      throw new SignupAPIError(500, 'Network error or unexpected failure', error);
+      throw new SignupAPIError(
+        500,
+        "Network error or unexpected failure",
+        error,
+      );
     }
   }
 
@@ -81,7 +93,7 @@ export class ApiSignupRepository implements ISignupRepository {
   async checkEmailExists(email: string): Promise<boolean> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/api/signup/check-email?email=${encodeURIComponent(email)}`
+        `${this.baseUrl}/api/signup/check-email?email=${encodeURIComponent(email)}`,
       );
       if (!response.ok) return false;
       const data = await response.json();

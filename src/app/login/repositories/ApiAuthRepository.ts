@@ -1,28 +1,31 @@
 // login/repositories/ApiAuthRepository.ts
-import { IAuthRepository } from './IAuthRepository';
-import { LoginInput, LoginResponse } from '../dto/LoginTypes';
-import { AuthSession } from '../models/AuthSession';
+import { IAuthRepository } from "../interfaces/IAuthRepository";
+import { LoginInput, LoginResponse } from "../dto/LoginTypes";
+import { AuthSession } from "../entities/AuthSession";
 
 /**
  * Repository implementation sử dụng API
+ * Simple pattern - no DI framework
  */
 export class ApiAuthRepository implements IAuthRepository {
   private baseUrl: string;
 
-  constructor(baseUrl: string = '/api/auth') {
+  constructor(baseUrl: string = "/api/auth") {
     this.baseUrl = baseUrl;
   }
 
   async login(input: LoginInput): Promise<AuthSession> {
     const res = await fetch(`${this.baseUrl}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(input),
     });
 
     if (!res.ok) {
-      const error = await res.json().catch(() => ({ message: 'Invalid credentials' }));
-      throw new Error(error.message || 'Invalid credentials');
+      const error = await res
+        .json()
+        .catch(() => ({ message: "Invalid credentials" }));
+      throw new Error(error.message || "Invalid credentials");
     }
 
     const data: LoginResponse = await res.json();
@@ -37,10 +40,10 @@ export class ApiAuthRepository implements IAuthRepository {
   async logout(): Promise<void> {
     try {
       await fetch(`${this.baseUrl}/logout`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${AuthSession.load()?.token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${AuthSession.load()?.token}`,
         },
       });
     } finally {
@@ -55,13 +58,13 @@ export class ApiAuthRepository implements IAuthRepository {
 
   async refreshToken(token: string): Promise<AuthSession> {
     const res = await fetch(`${this.baseUrl}/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refreshToken: token }),
     });
 
     if (!res.ok) {
-      throw new Error('Failed to refresh token');
+      throw new Error("Failed to refresh token");
     }
 
     const data: LoginResponse = await res.json();

@@ -53,9 +53,12 @@ export function useForgotPassword() {
       });
 
       return response;
-    } catch (error: any) {
+    } catch (error) {
       // Handle validation errors
-      if (error.name === "ForgotPasswordValidationError") {
+      if (
+        error instanceof Error &&
+        error.name === "ForgotPasswordValidationError"
+      ) {
         setSession((prev) => ({
           ...prev,
           fieldError: error.message,
@@ -98,8 +101,11 @@ export function useForgotPassword() {
       validate({ email: session.email });
       setSession((prev) => ({ ...prev, fieldError: undefined }));
       return false; // No error
-    } catch (error: any) {
-      if (error.name === "ForgotPasswordValidationError") {
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.name === "ForgotPasswordValidationError"
+      ) {
         setSession((prev) => ({ ...prev, fieldError: error.message }));
         return true; // Has error
       }

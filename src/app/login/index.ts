@@ -7,20 +7,15 @@ export { LoginForm } from "./components/LoginForm";
 export * from "./hooks/UseLogin";
 
 // Core
-export * from "./core/LoginLogic";
+export * from "./usecases/LoginLogic";
 
 // DTOs
 export * from "./dto/LoginTypes";
 
 // Models
-export * from "./models/User";
-export * from "./models/AuthSession";
+export * from "./entities/User";
+export * from "./entities/AuthSession";
 
 // Repositories
-export * from "./repositories/IAuthRepository";
 export * from "./repositories/ApiAuthRepository";
 export * from "./repositories/LocalStorageAuthRepository";
-export * from "./repositories/AuthRepositoryRegistry";
-
-// Providers
-export * from "./providers/AuthRepositoryProvider";

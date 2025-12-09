@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Application Layer - Media Query Hook
@@ -9,7 +9,7 @@
  * @module useMediaQuery
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 /**
  * Hook to detect media query matches
@@ -30,19 +30,22 @@ import { useState, useEffect } from 'react';
  */
 export function useMediaQuery(query: string): boolean {
   // Initialize with false for SSR safety
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(() => {
+    // Check if window is available (client-side only)
+    if (typeof window === "undefined") {
+      return false;
+    }
+    return window.matchMedia(query).matches;
+  });
 
   useEffect(() => {
     // Check if window is available (client-side only)
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
 
     // Create media query list
     const mediaQueryList = window.matchMedia(query);
-
-    // Update state with current match status
-    setMatches(mediaQueryList.matches);
 
     // Event handler for media query changes
     const handleChange = (event: MediaQueryListEvent) => {
@@ -50,11 +53,11 @@ export function useMediaQuery(query: string): boolean {
     };
 
     // Add event listener (modern API)
-    mediaQueryList.addEventListener('change', handleChange);
+    mediaQueryList.addEventListener("change", handleChange);
 
     // Cleanup listener on unmount
     return () => {
-      mediaQueryList.removeEventListener('change', handleChange);
+      mediaQueryList.removeEventListener("change", handleChange);
     };
   }, [query]);
 
@@ -77,7 +80,7 @@ export function useMediaQuery(query: string): boolean {
  * ```
  */
 export function useIsMobile(): boolean {
-  return useMediaQuery('(max-width: 767px)');
+  return useMediaQuery("(max-width: 767px)");
 }
 
 /**
@@ -88,7 +91,7 @@ export function useIsMobile(): boolean {
  * @returns True if viewport is tablet size
  */
 export function useIsTablet(): boolean {
-  return useMediaQuery('(min-width: 768px) and (max-width: 1023px)');
+  return useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
 }
 
 /**
@@ -99,5 +102,5 @@ export function useIsTablet(): boolean {
  * @returns True if viewport is desktop size
  */
 export function useIsDesktop(): boolean {
-  return useMediaQuery('(min-width: 1024px)');
+  return useMediaQuery("(min-width: 1024px)");
 }

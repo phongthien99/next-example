@@ -1,19 +1,21 @@
 // login/repositories/LocalStorageAuthRepository.ts
-import { IAuthRepository } from './IAuthRepository';
-import { LoginInput } from '../dto/LoginTypes';
-import { AuthSession } from '../models/AuthSession';
-import { User } from '../models/User';
+import { IAuthRepository } from "../interfaces/IAuthRepository";
+import { LoginInput } from "../dto/LoginTypes";
+import { AuthSession } from "../entities/AuthSession";
+import { User } from "../entities/User";
 
 /**
  * Repository implementation sử dụng LocalStorage
+ * Simple pattern - no DI framework
+ *
  * Hữu ích cho:
  * - Testing/Development
  * - Offline mode
  * - Mock data
  */
 export class LocalStorageAuthRepository implements IAuthRepository {
-  private readonly USERS_KEY = 'mock_users';
-  private readonly SESSION_KEY = 'auth_session';
+  private readonly USERS_KEY = "mock_users";
+  private readonly SESSION_KEY = "auth_session";
 
   constructor() {
     this.initMockUsers();
@@ -23,13 +25,23 @@ export class LocalStorageAuthRepository implements IAuthRepository {
    * Khởi tạo mock users cho testing
    */
   private initMockUsers(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const existingUsers = localStorage.getItem(this.USERS_KEY);
     if (!existingUsers) {
       const mockUsers = [
-        { email: 'admin@example.com', password: '123456', name: 'Admin User', userId: 'user_1' },
-        { email: 'test@example.com', password: 'password', name: 'Test User', userId: 'user_2' },
+        {
+          email: "admin@example.com",
+          password: "123456",
+          name: "Admin User",
+          userId: "user_1",
+        },
+        {
+          email: "test@example.com",
+          password: "password",
+          name: "Test User",
+          userId: "user_2",
+        },
       ];
       localStorage.setItem(this.USERS_KEY, JSON.stringify(mockUsers));
     }
@@ -37,17 +49,20 @@ export class LocalStorageAuthRepository implements IAuthRepository {
 
   async login(input: LoginInput): Promise<AuthSession> {
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    if (typeof window === 'undefined') {
-      throw new Error('LocalStorage not available');
+    if (typeof window === "undefined") {
+      throw new Error("LocalStorage not available");
     }
 
-    const users = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
-    const user = users.find((u: any) => u.email === input.email && u.password === input.password);
+    const users = JSON.parse(localStorage.getItem(this.USERS_KEY) || "[]");
+    const user = users.find(
+      (u: { email: string; password: string }) =>
+        u.email === input.email && u.password === input.password,
+    );
 
     if (!user) {
-      throw new Error('Invalid credentials');
+      throw new Error("Invalid credentials");
     }
 
     // Create session
@@ -56,7 +71,7 @@ export class LocalStorageAuthRepository implements IAuthRepository {
       `mock_token_${Date.now()}`,
       authUser,
       new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-      `mock_refresh_${Date.now()}`
+      `mock_refresh_${Date.now()}`,
     );
 
     session.save();
@@ -65,7 +80,7 @@ export class LocalStorageAuthRepository implements IAuthRepository {
 
   async logout(): Promise<void> {
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     AuthSession.clear();
   }
 
@@ -73,13 +88,13 @@ export class LocalStorageAuthRepository implements IAuthRepository {
     return AuthSession.load();
   }
 
-  async refreshToken(token: string): Promise<AuthSession> {
+  async refreshToken(_token: string): Promise<AuthSession> {
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     const currentSession = this.getCurrentSession();
     if (!currentSession) {
-      throw new Error('No session found');
+      throw new Error("No session found");
     }
 
     // Create new session with extended expiry
@@ -87,7 +102,7 @@ export class LocalStorageAuthRepository implements IAuthRepository {
       `mock_token_${Date.now()}`,
       currentSession.user,
       new Date(Date.now() + 24 * 60 * 60 * 1000),
-      `mock_refresh_${Date.now()}`
+      `mock_refresh_${Date.now()}`,
     );
 
     newSession.save();

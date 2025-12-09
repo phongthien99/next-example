@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import type { LucideIcon } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
@@ -27,7 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ({ title, url, icon, isActive, items }) => ({
       title,
       url,
-      icon: icon as any,
+      icon: icon as LucideIcon,
       isActive,
       items: items?.map(({ title, url }) => ({ title, url })),
     }),
@@ -36,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const projects = mockDashboardConfig.projects.map(({ name, url, icon }) => ({
     name,
     url,
-    icon: icon as any,
+    icon: icon as LucideIcon,
   }));
 
   const user = {

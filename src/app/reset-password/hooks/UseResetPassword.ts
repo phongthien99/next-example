@@ -62,13 +62,13 @@ export function useResetPassword(token: string | null) {
       const request = toResetPasswordRequest(input, token!);
       return repository.resetPassword(request);
     },
-    onSuccess: (response) => {
+    onSuccess: () => {
       // Success: redirect to login after 2 seconds
       setTimeout(() => {
         router.push("/login");
       }, 2000);
     },
-    onError: (error) => {
+    onError: () => {
       // Error handling is managed by the component
       // Error state is available via mutation.error
     },

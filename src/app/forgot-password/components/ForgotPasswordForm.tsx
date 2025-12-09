@@ -128,7 +128,6 @@ export function ForgotPasswordForm({
                   onChange={handleEmailChange}
                   onBlur={handleEmailBlur}
                   disabled={session.isLoading}
-                  autoFocus
                   autoComplete="email"
                   required
                   aria-invalid={!!session.fieldError}

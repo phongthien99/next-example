@@ -22,7 +22,7 @@ import {
 export function validate(data: unknown): ForgotPasswordInput {
   try {
     return ForgotPasswordInputSchema.parse(data);
-  } catch (error: any) {
+  } catch (error) {
     // Extract first validation error from Zod
 
     if (error instanceof ZodError) {

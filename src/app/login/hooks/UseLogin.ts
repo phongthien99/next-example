@@ -2,23 +2,23 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
 import { LoginInput } from "../dto/LoginTypes";
-import { validateLogin } from "../core/LoginLogic";
-import { AuthSession } from "../models/AuthSession";
-import { useAuthRepository } from "../providers/AuthRepositoryProvider";
+import { AuthSession } from "../entities/AuthSession";
+import { useAuthRepository } from "./useAuthRepository";
 
+/**
+ * Login Hook - Simple Context Pattern
+ *
+ * No validation here - validation is responsibility of UI layer (component)
+ * Hook only handles data fetching and state management
+ */
 export function useLogin() {
   const authRepository = useAuthRepository();
 
   const mutation = useMutation<AuthSession, Error, LoginInput>({
     mutationFn: async (input: LoginInput) => {
-      // Validate input với Zod
-      const validation = validateLogin(input);
-      if (!validation.success) {
-        throw new Error(validation.error);
-      }
-
-      // Sử dụng Repository từ Provider
-      return await authRepository.login(validation.data);
+      // Hook chỉ gọi repository - KHÔNG validate
+      // Validation là trách nhiệm của component (UI layer)
+      return await authRepository.login(input);
     },
   });
 

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "@/app/login/hooks/UseLogin";
-import { validateLogin } from "@/app/login/core/LoginLogic";
+import { validateLogin } from "@/app/login/usecases/LoginLogic";
 
 export function LoginForm({
   className,
@@ -31,25 +31,22 @@ export function LoginForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<{
-    email?: string;
-    password?: string;
-  }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError("");
-    setFieldErrors({});
 
-    // Client-side validation với Zod
+    // ✅ Validation ở component (UI layer) - ĐÚNG VỊ TRÍ
+    // Component là nơi duy nhất validate user input
     const validation = validateLogin({ email, password });
     if (!validation.success) {
       setValidationError(validation.error);
       return;
     }
 
+    // Sau khi validate xong, gọi hook với data đã validated
     login(
-      { email, password },
+      validation.data, // ✅ Pass validated data
       {
         onSuccess: (session) => {
           // Sử dụng model để save session

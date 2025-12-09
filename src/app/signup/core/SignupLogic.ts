@@ -1,4 +1,8 @@
-import { SignupInput, SignupInputSchema, SignupValidationError } from '../dto/SignupTypes';
+import {
+  SignupInput,
+  SignupInputSchema,
+  SignupValidationError,
+} from "../dto/SignupTypes";
 
 /**
  * SignupLogic - Pure Domain Logic
@@ -17,15 +21,19 @@ import { SignupInput, SignupInputSchema, SignupValidationError } from '../dto/Si
 export function validate(data: unknown): SignupInput {
   try {
     return SignupInputSchema.parse(data);
-  } catch (error: any) {
+  } catch (error) {
     // Extract first validation error from Zod
-    const firstError = error.errors?.[0];
-    if (firstError) {
-      throw new SignupValidationError(
-        firstError.path.join('.'),
-        firstError.message
-      );
+    if (error && typeof error === "object" && "errors" in error) {
+      const firstError = (
+        error as { errors: Array<{ path: string[]; message: string }> }
+      ).errors?.[0];
+      if (firstError) {
+        throw new SignupValidationError(
+          firstError.path.join("."),
+          firstError.message,
+        );
+      }
     }
-    throw new SignupValidationError('unknown', 'Validation failed');
+    throw new SignupValidationError("unknown", "Validation failed");
   }
 }
