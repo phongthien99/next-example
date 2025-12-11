@@ -23,5 +23,10 @@ export {
 // Repository Interface
 export type { ISignupRepository } from './repositories/ISignupRepository';
 
+// Repository Implementations
+export { SignupRepositoryRegistry } from './repositories/SignupRepositoryRegistry';
+export type { SignupRepositoryType } from './repositories/SignupRepositoryRegistry';
+export { SupabaseSignupRepository } from './repositories/SupabaseSignupRepository';
+
 // Hooks (if needed by other features)
 export { useSignup } from './hooks/UseSignup';

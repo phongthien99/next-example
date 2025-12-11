@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useLogin } from "@/app/login/hooks/UseLogin";
 import { validateLogin } from "@/app/login/usecases/LoginLogic";
+import { AuthSession } from "../entities/AuthSession";
 
 export function LoginForm({
   className,
@@ -48,7 +49,7 @@ export function LoginForm({
     login(
       validation.data, // ✅ Pass validated data
       {
-        onSuccess: (session) => {
+        onSuccess: (session: AuthSession) => {
           // Sử dụng model để save session
           session.save();
 

@@ -18,8 +18,7 @@ export const metadata: Metadata = {
  */
 export default function SignupPage() {
   // Determine repository type from environment
-  const useLocalStorage = process.env.NEXT_PUBLIC_USE_LOCAL_STORAGE === "true";
-  const repositoryType = useLocalStorage ? "localStorage" : "api";
+  const repositoryType = 'supabase';
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">

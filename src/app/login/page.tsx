@@ -15,7 +15,7 @@ export default function Page() {
       id="login-page-container"
     >
       <div className="w-full max-w-sm">
-        <AuthProvider type="localStorage">
+        <AuthProvider type="supabase">
           <LoginForm />
         </AuthProvider>
       </div>

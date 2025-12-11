@@ -19,3 +19,12 @@ export * from "./entities/AuthSession";
 // Repositories
 export * from "./repositories/ApiAuthRepository";
 export * from "./repositories/LocalStorageAuthRepository";
+export { AuthRepositoryRegistry } from "./repositories/AuthRepositoryRegistry";
+export type { AuthRepositoryType } from "./repositories/AuthRepositoryRegistry";
+export { SupabaseAuthRepository } from "./repositories/SupabaseAuthRepository";
+
+// Providers
+export { AuthProvider } from "./providers/AuthProvider";
+
+// Interfaces
+export type { IAuthRepository } from "./interfaces/IAuthRepository";

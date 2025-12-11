@@ -1,22 +1,47 @@
 "use client";
 
 /**
- * Auth Provider - No DI Framework
+ * Auth Provider - Registry Pattern
  *
- * Clean React Context pattern để provide AuthRepository
+ * Provides AuthRepository instance to component tree via React Context.
+ * Uses AuthRepositoryRegistry for repository selection.
+ *
+ * Migration from previous version:
+ * - Now uses AuthRepositoryRegistry.getRepository()
+ * - Supports 'supabase' type
+ * - Maintains backward compatibility
+ *
+ * Usage:
+ * ```tsx
+ * // Automatic (uses environment/defaults)
+ * <AuthProvider>
+ *   <LoginForm />
+ * </AuthProvider>
+ *
+ * // Explicit type selection
+ * <AuthProvider type="supabase">
+ *   <LoginForm />
+ * </AuthProvider>
+ *
+ * // Custom repository (testing)
+ * <AuthProvider repository={mockRepository}>
+ *   <LoginForm />
+ * </AuthProvider>
+ * ```
  */
 
 import { useMemo, type ReactNode } from "react";
 import { AuthContext } from "../context/AuthContext";
 import type { IAuthRepository } from "../interfaces/IAuthRepository";
-import { ApiAuthRepository } from "../repositories/ApiAuthRepository";
-import { LocalStorageAuthRepository } from "../repositories/LocalStorageAuthRepository";
+import { AuthRepositoryRegistry, type AuthRepositoryType } from "../repositories/AuthRepositoryRegistry";
 
 /**
- * Repository type selection
+ * AuthProvider Props
+ *
+ * @property children - Child components
+ * @property type - Repository type to use ('api' | 'localStorage' | 'supabase')
+ * @property repository - Custom repository instance (overrides type)
  */
-type AuthRepositoryType = "api" | "localStorage";
-
 interface AuthProviderProps {
   children: ReactNode;
   type?: AuthRepositoryType;
@@ -24,14 +49,10 @@ interface AuthProviderProps {
 }
 
 /**
- * Auth Provider - Simple pattern
+ * Auth Provider - Registry Pattern
  *
- * Usage:
- * ```tsx
- * <AuthProvider type="localStorage">
- *   <LoginForm />
- * </AuthProvider>
- * ```
+ * Provides AuthRepository instance to component tree via React Context.
+ * Uses AuthRepositoryRegistry for repository selection.
  */
 export function AuthProvider({
   children,
@@ -39,23 +60,13 @@ export function AuthProvider({
   repository,
 }: AuthProviderProps) {
   const repositoryInstance = useMemo<IAuthRepository>(() => {
-    // 1. Use custom repository if provided
+    // 1. Use custom repository if provided (testing/override)
     if (repository) {
       return repository;
     }
 
-    // 2. Determine repository type
-    const repoType = type || getDefaultRepositoryType();
-
-    // 3. Create repository instance
-    switch (repoType) {
-      case "localStorage":
-        return new LocalStorageAuthRepository();
-
-      case "api":
-      default:
-        return new ApiAuthRepository();
-    }
+    // 2. Use registry to get repository by type
+    return AuthRepositoryRegistry.getRepository(type);
   }, [type, repository]);
 
   return (
@@ -63,26 +74,4 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   );
-}
-
-/**
- * Get default repository type from environment
- */
-function getDefaultRepositoryType(): AuthRepositoryType {
-  // Check environment variable
-  const envType = process.env.NEXT_PUBLIC_AUTH_REPO_TYPE;
-  if (envType === "api" || envType === "localStorage") {
-    return envType;
-  }
-
-  // Check localStorage (runtime switching)
-  if (typeof window !== "undefined") {
-    const storedType = localStorage.getItem("auth_repository_type");
-    if (storedType === "api" || storedType === "localStorage") {
-      return storedType as AuthRepositoryType;
-    }
-  }
-
-  // Default: API in production, localStorage in development
-  return process.env.NODE_ENV === "production" ? "api" : "localStorage";
 }
