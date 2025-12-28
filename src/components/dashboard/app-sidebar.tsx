@@ -1,0 +1,78 @@
+"use client";
+
+import * as React from "react";
+import type { LucideIcon } from "lucide-react";
+
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import { mockDashboardConfig } from "@/data/mockDashboardConfig";
+import { AuthSession } from "@/app/login/entities/AuthSession";
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Transform domain data to match component prop interfaces
+  const teams = mockDashboardConfig.teams.map(({ name, logo, plan }) => ({
+    name,
+    logo: logo as React.ElementType,
+    plan,
+  }));
+
+  const navMain = mockDashboardConfig.navMain.map(
+    ({ title, url, icon, isActive, items }) => ({
+      title,
+      url,
+      icon: icon as LucideIcon,
+      isActive,
+      items: items?.map(({ title, url }) => ({ title, url })),
+    }),
+  );
+
+  const projects = mockDashboardConfig.projects.map(({ name, url, icon }) => ({
+    name,
+    url,
+    icon: icon as LucideIcon,
+  }));
+
+  // Lấy user từ localStorage thay vì mock data
+  const [user, setUser] = React.useState({
+    name: mockDashboardConfig.user.name,
+    email: mockDashboardConfig.user.email,
+    avatar: mockDashboardConfig.user.avatar,
+  });
+
+  React.useEffect(() => {
+    // Load user từ localStorage
+    const session = AuthSession.load();
+    if (session?.user) {
+      setUser({
+        name: session.user.name || session.user.email.split("@")[0],
+        email: session.user.email,
+        avatar: mockDashboardConfig.user.avatar, // Giữ avatar mặc định
+      });
+    }
+  }, []);
+
+  return (
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <TeamSwitcher teams={teams} />
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={navMain} />
+        <NavProjects projects={projects} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={user} />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  );
+}

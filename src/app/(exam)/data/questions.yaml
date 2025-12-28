@@ -1,0 +1,206 @@
+questions:
+  - id: 1
+    category: "Reading Comprehension"
+    content: |
+      The annual company retreat will be held at the Seaside Resort from June 15-17. All employees are required to attend the orientation session on the first day at 9:00 AM. Lunch will be provided on all three days, and there will be team-building activities in the afternoons. Please confirm your attendance by May 30th.
+
+      What is the main purpose of this notice?
+    options:
+      - id: "A"
+        text: "To announce a vacation policy change"
+      - id: "B"
+        text: "To inform employees about a company retreat"
+      - id: "C"
+        text: "To schedule a meeting with management"
+      - id: "D"
+        text: "To advertise a new resort"
+    correctAnswer: "B"
+    explanation: |
+      Đáp án: D. has been employed
+      Giải thích: Hiện tại hoàn thành bị động – diễn tả công việc kéo dài đến hiện tại.
+      Dịch: Ông Perez đã làm việc với vai trò kỹ sư công nghiệp tại Gaberly Logistics gần 20 năm.
+
+  - id: 2
+    category: "Grammar - Verb Tenses"
+    content: |
+      The marketing team _______ a comprehensive strategy for the new product launch next month.
+
+      Choose the best option to complete the sentence.
+    options:
+      - id: "A"
+        text: "develops"
+      - id: "B"
+        text: "developed"
+      - id: "C"
+        text: "will develop"
+      - id: "D"
+        text: "has developed"
+    correctAnswer: "D"
+    explanation: |
+      "Has developed" (present perfect) is correct because the strategy was completed in the past but is relevant to the present situation of the upcoming product launch.
+
+  - id: 3
+    category: "Vocabulary - Business"
+    content: |
+      The CEO's _______ speech motivated the entire workforce and boosted company morale significantly.
+
+      Choose the word that best completes the sentence.
+    options:
+      - id: "A"
+        text: "inspiring"
+      - id: "B"
+        text: "inspired"
+      - id: "C"
+        text: "inspiration"
+      - id: "D"
+        text: "inspire"
+    correctAnswer: "A"
+    explanation: |
+      "Inspiring" is the correct adjective form that describes the nature of the speech. It means the speech had the quality of motivating or encouraging others.
+
+  - id: 4
+    category: "Listening Comprehension"
+    content: |
+      You will hear a phone conversation between a customer and a hotel receptionist.
+
+      Customer: "I'd like to make a reservation for two nights, starting tomorrow."
+      Receptionist: "I'm sorry, but we're fully booked for tomorrow. However, we have availability starting the day after tomorrow."
+      Customer: "That would work. How much would it be for two nights?"
+      Receptionist: "It's $120 per night for a standard room."
+
+      How much will the customer pay in total?
+    options:
+      - id: "A"
+        text: "$120"
+      - id: "B"
+        text: "$180"
+      - id: "C"
+        text: "$240"
+      - id: "D"
+        text: "$360"
+    correctAnswer: "C"
+    explanation: |
+      The customer is staying for two nights at $120 per night, so the total cost is $120 × 2 = $240.
+
+  - id: 5
+    category: "Reading Comprehension - Email"
+    content: |
+      From: sarah.johnson@techcorp.com
+      To: all-staff@techcorp.com
+      Subject: New Security Policy
+
+      Effective immediately, all employees must use two-factor authentication when accessing company systems. Please update your passwords to meet the new requirements: minimum 12 characters with a mix of letters, numbers, and symbols. IT support will be available all week to assist with the transition.
+
+      When does the new security policy take effect?
+    options:
+      - id: "A"
+        text: "Next week"
+      - id: "B"
+        text: "At the end of the month"
+      - id: "C"
+        text: "Immediately"
+      - id: "D"
+        text: "After IT support training"
+    correctAnswer: "C"
+    explanation: |
+      The email clearly states "Effective immediately," which means the new security policy starts right away.
+
+  - id: 6
+    category: "Grammar - Prepositions"
+    content: |
+      The conference will be held _______ the Grand Hotel _______ downtown.
+
+      Choose the best prepositions to complete the sentence.
+    options:
+      - id: "A"
+        text: "at, in"
+      - id: "B"
+        text: "in, at"
+      - id: "C"
+        text: "on, in"
+      - id: "D"
+        text: "at, on"
+    correctAnswer: "A"
+    explanation: |
+      "At" is used for specific locations/buildings (the Grand Hotel), and "in" is used for areas or districts (downtown).
+
+  - id: 7
+    category: "Vocabulary - Finance"
+    content: |
+      The company's quarterly _______ showed a 15% increase in revenue compared to the same period last year.
+
+      Choose the word that best completes the sentence.
+    options:
+      - id: "A"
+        text: "report"
+      - id: "B"
+        text: "reported"
+      - id: "C"
+        text: "reporting"
+      - id: "D"
+        text: "reports"
+    correctAnswer: "A"
+    explanation: |
+      "Report" is the correct noun form. A "quarterly report" is a standard business document that shows financial performance.
+
+  - id: 8
+    category: "Reading Comprehension - Instructions"
+    content: |
+      Assembly Instructions for Office Chair Model X-200:
+      1. Attach the wheels to the base
+      2. Insert the gas cylinder into the base
+      3. Attach the seat to the mechanism
+      4. Connect the backrest to the seat
+      5. Adjust height and tilt as needed
+
+      What should you do first when assembling the chair?
+    options:
+      - id: "A"
+        text: "Insert the gas cylinder"
+      - id: "B"
+        text: "Attach the wheels to the base"
+      - id: "C"
+        text: "Connect the backrest"
+      - id: "D"
+        text: "Adjust the height"
+    correctAnswer: "B"
+    explanation: |
+      According to the instructions, step 1 is "Attach the wheels to the base," which is what should be done first.
+
+  - id: 9
+    category: "Grammar - Conditionals"
+    content: |
+      If the weather _______ nice tomorrow, we _______ have the meeting outdoors.
+
+      Choose the best options to complete the sentence.
+    options:
+      - id: "A"
+        text: "is, will"
+      - id: "B"
+        text: "will be, would"
+      - id: "C"
+        text: "was, will"
+      - id: "D"
+        text: "would be, will"
+    correctAnswer: "A"
+    explanation: |
+      This is a first conditional sentence (real possibility). The structure is "If + present simple, will + base verb." "If the weather is nice, we will have..."
+
+  - id: 10
+    category: "Vocabulary - Office Equipment"
+    content: |
+      Please make sure to _______ all documents before the meeting starts. We'll need copies for everyone.
+
+      Choose the word that best completes the sentence.
+    options:
+      - id: "A"
+        text: "photocopy"
+      - id: "B"
+        text: "photograph"
+      - id: "C"
+        text: "phone"
+      - id: "D"
+        text: "fax"
+    correctAnswer: "A"
+    explanation: |
+      "Photocopy" means to make copies of documents, which fits the context of needing copies for everyone at the meeting.

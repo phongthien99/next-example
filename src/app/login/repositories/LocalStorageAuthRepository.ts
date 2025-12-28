@@ -11,41 +11,10 @@ import { User } from "../entities/User";
  * Hữu ích cho:
  * - Testing/Development
  * - Offline mode
- * - Mock data
+ * - Lưu thông tin user nhập vào
  */
 export class LocalStorageAuthRepository implements IAuthRepository {
-  private readonly USERS_KEY = "mock_users";
   private readonly SESSION_KEY = "auth_session";
-
-  constructor() {
-    this.initMockUsers();
-  }
-
-  /**
-   * Khởi tạo mock users cho testing
-   */
-  private initMockUsers(): void {
-    if (typeof window === "undefined") return;
-
-    const existingUsers = localStorage.getItem(this.USERS_KEY);
-    if (!existingUsers) {
-      const mockUsers = [
-        {
-          email: "admin@example.com",
-          password: "123456",
-          name: "Admin User",
-          userId: "user_1",
-        },
-        {
-          email: "test@example.com",
-          password: "password",
-          name: "Test User",
-          userId: "user_2",
-        },
-      ];
-      localStorage.setItem(this.USERS_KEY, JSON.stringify(mockUsers));
-    }
-  }
 
   async login(input: LoginInput): Promise<AuthSession> {
     // Simulate network delay
@@ -55,23 +24,16 @@ export class LocalStorageAuthRepository implements IAuthRepository {
       throw new Error("LocalStorage not available");
     }
 
-    const users = JSON.parse(localStorage.getItem(this.USERS_KEY) || "[]");
-    const user = users.find(
-      (u: { email: string; password: string }) =>
-        u.email === input.email && u.password === input.password,
-    );
-
-    if (!user) {
-      throw new Error("Invalid credentials");
-    }
+    // Tạo user từ email và password mà user nhập vào
+    const userId = `user_${Date.now()}`;
+    const authUser = new User(userId, input.email, input.email.split("@")[0]);
 
     // Create session
-    const authUser = new User(user.userId, user.email, user.name);
     const session = new AuthSession(
-      `mock_token_${Date.now()}`,
+      `token_${Date.now()}`,
       authUser,
       new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-      `mock_refresh_${Date.now()}`,
+      `refresh_${Date.now()}`,
     );
 
     session.save();

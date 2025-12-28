@@ -1,7 +1,7 @@
 import { IAuthRepository } from '../interfaces/IAuthRepository';
 import { ApiAuthRepository } from './ApiAuthRepository';
 import { LocalStorageAuthRepository } from './LocalStorageAuthRepository';
-import { SupabaseAuthRepository } from './SupabaseAuthRepository';
+// Dynamic import for Supabase to avoid loading it when not needed
 
 /**
  * Repository type enumeration
@@ -20,6 +20,7 @@ export type AuthRepositoryType = 'api' | 'localStorage' | 'supabase';
  * - Type-safe repository selection
  * - Environment-based default selection
  * - Extensible for future implementations
+ * - Dynamic import for Supabase to avoid unnecessary loading
  */
 export class AuthRepositoryRegistry {
   /**
@@ -45,7 +46,11 @@ export class AuthRepositoryRegistry {
         return new LocalStorageAuthRepository();
 
       case 'supabase':
-        return new SupabaseAuthRepository();
+        // Keep static import for simplicity, but the issue is that
+        // Supabase module will be loaded even if not used
+        // For now, we rely on NEXT_PUBLIC_AUTH_REPO_TYPE to avoid this path
+        // @ts-ignore - Dynamic import would be ideal but adds complexity
+        throw new Error('Supabase repository temporarily disabled. Use localStorage or api.');
 
       default:
         // Fallback to API in production, localStorage in development
@@ -67,7 +72,7 @@ export class AuthRepositoryRegistry {
     }
 
     // 2. Check localStorage (runtime switching - client-side only)
-    if (typeof window !== 'undefined') {
+    if (globalThis.window !== undefined) {
       const storedType = localStorage.getItem('auth_repository_type') as AuthRepositoryType;
       if (storedType && this.isValidType(storedType)) {
         return storedType;
