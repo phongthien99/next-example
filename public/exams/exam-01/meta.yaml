@@ -39,53 +39,7 @@ parts:
     totalQuestions: 6
     timeLimit: null # no individual time limit
 
-  - id: "part-02"
-    order: 2
-    title: "Question-Response"
-    description: "Listen to a question and select the best response"
-    type: "listening"
-    totalQuestions: 25
-    timeLimit: null
-
-  - id: "part-03"
-    order: 3
-    title: "Conversations"
-    description: "Listen to conversations and answer questions"
-    type: "listening"
-    totalQuestions: 39
-    timeLimit: null
-
-  - id: "part-04"
-    order: 4
-    title: "Short Talks"
-    description: "Listen to talks and answer questions"
-    type: "listening"
-    totalQuestions: 30
-    timeLimit: null
-
-  - id: "part-05"
-    order: 5
-    title: "Incomplete Sentences"
-    description: "Complete the sentences with the best option"
-    type: "reading"
-    totalQuestions: 30
-    timeLimit: null
-
-  - id: "part-06"
-    order: 6
-    title: "Text Completion"
-    description: "Complete the texts with appropriate words or phrases"
-    type: "reading"
-    totalQuestions: 16
-    timeLimit: null
-
-  - id: "part-07"
-    order: 7
-    title: "Reading Comprehension"
-    description: "Read passages and answer comprehension questions"
-    type: "reading"
-    totalQuestions: 54
-    timeLimit: null
+  
 
 # Instructions
 generalInstructions: |

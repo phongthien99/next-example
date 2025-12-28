@@ -1,103 +1,39 @@
 "use client";
 
-/**
- * Exam Page - Main Route Component
- * Provides repository context and renders exam/quiz UI
- */
-import { useState, useEffect, useCallback } from "react";
-import { ExamRepositoryProvider } from "../providers/ExamRepositoryProvider";
-import { useExamManagement } from "../hooks/UseExamManagement";
-import { Timer } from "../components/Timer";
-import { QuestionNavigationGrid } from "../components/QuestionNavigationGrid";
-import { QuizActions } from "../components/QuizActions";
-import { QuestionDisplay } from "../components/QuestionDisplay";
-import { QuizNavigation } from "../components/QuizNavigation";
-import { QuizSummary } from "../components/QuizSummary";
+import { useState, useEffect } from "react";
+import { yamlExamLoader } from "@/lib/exam/repositories/YamlExamLoaderRepository";
+import type { ExamSummary } from "@/lib/exam/types/ExamSchema";
+import { FileText, Clock, BookOpen, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
-function ExamContent() {
-  const {
-    questions,
-    currentSession,
-    currentQuestion,
-    progress,
-    isLoading,
-    error,
-    initializeQuiz,
-    navigateToQuestion,
-    selectAnswer,
-    toggleFlag,
-    checkAnswer,
-    pauseQuiz,
-    resumeQuiz,
-    updateTime,
-  } = useExamManagement();
+export default function ExamListPage() {
+  const [exams, setExams] = useState<ExamSummary[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [showSummary, setShowSummary] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-
-  // Initialize quiz on mount
   useEffect(() => {
-    if (questions.length > 0 && !currentSession) {
-      initializeQuiz(
-        "TOEIC Practice Test - Reading & Grammar",
-        questions.length,
-      );
+    async function loadExams() {
+      try {
+        setIsLoading(true);
+        const indexData = await yamlExamLoader.loadExamIndex();
+        setExams(indexData.exams.filter(exam => exam.isActive));
+      } catch (err) {
+        console.error("Failed to load exams:", err);
+        setError("Failed to load exams. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [questions, currentSession, initializeQuiz]);
 
-  // Update selected answer when navigating to a different question
-  useEffect(() => {
-    if (currentQuestion && currentSession) {
-      const answer = currentSession.answers[currentQuestion.id];
-      setSelectedAnswer(answer || null);
-    }
-  }, [currentQuestion, currentSession]);
-
-  const handleAnswerSelect = async (optionId: string) => {
-    if (!currentQuestion) return;
-    setSelectedAnswer(optionId);
-    await selectAnswer(currentQuestion.id, optionId);
-  };
-
-  const handleToggleFlag = async () => {
-    if (!currentQuestion) return;
-    await toggleFlag(currentQuestion.id);
-  };
-
-  const handleTogglePause = () => {
-    if (!currentSession) return;
-    if (currentSession.isPaused) {
-      resumeQuiz();
-    } else {
-      pauseQuiz();
-    }
-  };
-
-  const handlePrevious = () => {
-    if (!currentQuestion || currentQuestion.id === 1) return;
-    navigateToQuestion(currentQuestion.id - 1);
-  };
-
-  const handleNext = () => {
-    if (!currentQuestion || currentQuestion.id === questions.length) return;
-    navigateToQuestion(currentQuestion.id + 1);
-  };
-
-  const handleCheck = async () => {
-    if (!currentQuestion) return;
-    await checkAnswer(currentQuestion.id);
-  };
-
-  const handleTimeUpdate = useCallback((_formattedTime: string, seconds: number) => {
-    updateTime(seconds);
-  }, [updateTime]);
+    loadExams();
+  }, []);
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading exam...</p>
+          <p className="mt-4 text-gray-600">Loading exams...</p>
         </div>
       </div>
     );
@@ -107,17 +43,9 @@ function ExamContent() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 font-semibold">Error loading exam</p>
-          <p className="text-gray-600 mt-2">{error.message}</p>
+          <p className="text-red-600 font-semibold">Error</p>
+          <p className="text-gray-600 mt-2">{error}</p>
         </div>
-      </div>
-    );
-  }
-
-  if (!currentSession || !currentQuestion) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Initializing quiz session...</p>
       </div>
     );
   }
@@ -125,78 +53,93 @@ function ExamContent() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl font-semibold text-gray-800">
-              {currentSession.title}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <FileText className="h-8 w-8 text-blue-600" />
+            <h1 className="text-3xl font-bold text-gray-900">
+              Available Exams
             </h1>
-            <Timer
-              isPaused={currentSession.isPaused}
-              onTimeUpdate={handleTimeUpdate}
-            />
           </div>
+          <p className="text-gray-600">
+            Choose an exam to start practicing
+          </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Question Navigation Grid */}
-        <QuestionNavigationGrid
-          totalQuestions={currentSession.totalQuestions}
-          currentQuestionId={currentQuestion.id}
-          answeredQuestions={currentSession.answeredQuestions}
-          flaggedQuestions={currentSession.flaggedQuestions}
-          answeredCount={currentSession.answeredQuestions.size}
-          onNavigateToQuestion={navigateToQuestion}
-        />
+      {/* Exam List */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {exams.length === 0 ? (
+          <div className="text-center py-12">
+            <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-600 text-lg">No exams available</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {exams.map((exam) => (
+              <Link
+                key={exam.id}
+                href={`/exam/${exam.id}`}
+                className="group"
+              >
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 hover:border-blue-400 hover:shadow-md transition-all duration-200 overflow-hidden h-full">
+                  {/* Thumbnail */}
+                  {exam.thumbnail && (
+                    <div className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 relative">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <FileText className="h-16 w-16 text-white opacity-50" />
+                      </div>
+                    </div>
+                  )}
 
-        {/* Action Buttons */}
-        <QuizActions
-          isFlagged={currentSession.flaggedQuestions.has(currentQuestion.id)}
-          isPaused={currentSession.isPaused}
-          onToggleFlag={handleToggleFlag}
-          onTogglePause={handleTogglePause}
-          onShowSummary={() => setShowSummary(true)}
-        />
+                  {/* Content */}
+                  <div className="p-6">
+                    {/* Title */}
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                      {exam.title}
+                    </h3>
 
-        {/* Question Content */}
-        <QuestionDisplay
-          question={currentQuestion}
-          selectedAnswer={selectedAnswer}
-          isChecked={currentSession.checkedQuestions.has(currentQuestion.id)}
-          onSelectAnswer={handleAnswerSelect}
-        />
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {exam.description}
+                    </p>
 
-        {/* Navigation Controls */}
-        <QuizNavigation
-          currentQuestionId={currentQuestion.id}
-          totalQuestions={currentSession.totalQuestions}
-          isChecked={currentSession.checkedQuestions.has(currentQuestion.id)}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onCheck={handleCheck}
-        />
+                    {/* Meta Info */}
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <Clock className="h-4 w-4" />
+                        <span>{exam.duration} minutes</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <BookOpen className="h-4 w-4" />
+                        <span>{exam.totalQuestions} questions</span>
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {exam.type.toUpperCase()}
+                      </span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {exam.level}
+                      </span>
+                    </div>
+
+                    {/* Action */}
+                    <div className="flex items-center justify-between pt-4 border-t">
+                      <span className="text-sm font-medium text-blue-600 group-hover:text-blue-700">
+                        Start Exam
+                      </span>
+                      <ChevronRight className="h-5 w-5 text-blue-600 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* Quiz Summary Modal */}
-      {progress && (
-        <QuizSummary
-          isOpen={showSummary}
-          onClose={() => setShowSummary(false)}
-          progress={progress}
-          answeredQuestions={currentSession.answeredQuestions}
-          flaggedQuestions={currentSession.flaggedQuestions}
-          onNavigateToQuestion={navigateToQuestion}
-        />
-      )}
     </div>
-  );
-}
-
-export default function ExamPage() {
-  return (
-    <ExamRepositoryProvider repositoryType="yaml">
-      <ExamContent />
-    </ExamRepositoryProvider>
   );
 }

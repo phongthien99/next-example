@@ -20,11 +20,7 @@ instructions: |
 questionIds:
   - "q-001"
   - "q-002"
-  - "q-003"
-  - "q-004"
-  - "q-005"
-  - "q-006"
-
+  
 # Settings
 settings:
   hasAudio: true
