@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { yamlExamLoader } from "@/lib/exam/repositories/YamlExamLoaderRepository";
 import type { ExamMeta, Question } from "@/lib/exam/types/ExamSchema";
 import { Clock, ChevronLeft, ChevronRight, Flag, Check } from "lucide-react";
+
+// Route segment config for static export
+export const dynamicParams = false;
+
+
 
 interface QuizSession {
   currentQuestionIndex: number;

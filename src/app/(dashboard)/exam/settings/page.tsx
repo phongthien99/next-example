@@ -22,38 +22,38 @@ export default function ExamSettingsPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="font-medium text-gray-900">
+                  <label htmlFor="auto-save" className="font-medium text-gray-900">
                     Auto-save answers
                   </label>
                   <p className="text-sm text-gray-500">
                     Automatically save your answers as you work
                   </p>
                 </div>
-                <input type="checkbox" className="toggle" defaultChecked />
+                <input id="auto-save" type="checkbox" className="toggle" defaultChecked />
               </div>
 
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="font-medium text-gray-900">
+                  <label htmlFor="show-timer" className="font-medium text-gray-900">
                     Show timer
                   </label>
                   <p className="text-sm text-gray-500">
                     Display countdown timer during exam
                   </p>
                 </div>
-                <input type="checkbox" className="toggle" defaultChecked />
+                <input id="show-timer" type="checkbox" className="toggle" defaultChecked />
               </div>
 
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="font-medium text-gray-900">
+                  <label htmlFor="keyboard-shortcuts" className="font-medium text-gray-900">
                     Enable keyboard shortcuts
                   </label>
                   <p className="text-sm text-gray-500">
                     Use keyboard to navigate questions
                   </p>
                 </div>
-                <input type="checkbox" className="toggle" defaultChecked />
+                <input id="keyboard-shortcuts" type="checkbox" className="toggle" defaultChecked />
               </div>
             </div>
           </div>
@@ -63,10 +63,10 @@ export default function ExamSettingsPage() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="exam-duration" className="block text-sm font-medium text-gray-700 mb-2">
                   Default exam duration
                 </label>
-                <select className="w-full border rounded-md p-2">
+                <select id="exam-duration" className="w-full border rounded-md p-2">
                   <option>120 minutes</option>
                   <option>90 minutes</option>
                   <option>60 minutes</option>
@@ -75,10 +75,10 @@ export default function ExamSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="questions-per-page" className="block text-sm font-medium text-gray-700 mb-2">
                   Questions per page
                 </label>
-                <select className="w-full border rounded-md p-2">
+                <select id="questions-per-page" className="w-full border rounded-md p-2">
                   <option>1 question</option>
                   <option>5 questions</option>
                   <option>10 questions</option>

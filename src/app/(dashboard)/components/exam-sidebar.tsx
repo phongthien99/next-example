@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import {
   BookOpen,
   Clock,
@@ -10,7 +11,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-import { NavUser } from "@/components/dashboard/nav-user";
+import { NavUser } from "@/components/dashboard/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -83,7 +84,7 @@ export function ExamSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/exam">
+              <Link href="/exam">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <GraduationCap className="size-4" />
                 </div>
@@ -91,7 +92,7 @@ export function ExamSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
                   <span className="truncate font-semibold">TOEIC Exam</span>
                   <span className="truncate text-xs">Practice Platform</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -102,10 +103,10 @@ export function ExamSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
           {examNavItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild isActive={item.isActive}>
-                <a href={item.url}>
+                <Link href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

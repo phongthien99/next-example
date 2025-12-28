@@ -97,7 +97,7 @@ export class SupabaseAuthRepository implements IAuthRepository {
     try {
       // Fallback: Check our localStorage pattern since getSession() is async
       return AuthSession.load();
-    } catch (error) {
+    } catch {
       return null;
     }
   }

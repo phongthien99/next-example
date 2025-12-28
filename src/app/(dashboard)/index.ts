@@ -8,7 +8,6 @@ export * from './models/Question';
 export * from './models/Quiz';
 
 // DTOs
-export * from './dto/ExamTypes';
 
 // Core Business Logic
 export * from './core/ExamLogic';

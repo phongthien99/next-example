@@ -14,7 +14,7 @@ import type {
 
 export class YamlExamLoaderRepository {
   private baseUrl = '/exams';
-  private cache = new Map<string, any>();
+  private cache = new Map<string, ExamIndex | ExamMeta | Part | Question>();
 
   /**
    * Load exam index (list of all exams)
@@ -22,7 +22,7 @@ export class YamlExamLoaderRepository {
   async loadExamIndex(): Promise<ExamIndex> {
     const cacheKey = 'index';
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey) as ExamIndex;
     }
 
     try {
@@ -48,7 +48,7 @@ export class YamlExamLoaderRepository {
   async loadExamMeta(examId: string): Promise<ExamMeta> {
     const cacheKey = `meta-${examId}`;
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey) as ExamMeta;
     }
 
     try {
@@ -74,7 +74,7 @@ export class YamlExamLoaderRepository {
   async loadPart(examId: string, partId: string): Promise<Part> {
     const cacheKey = `part-${examId}-${partId}`;
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey) as Part;
     }
 
     try {
@@ -100,7 +100,7 @@ export class YamlExamLoaderRepository {
   async loadQuestion(examId: string, questionId: string): Promise<Question> {
     const cacheKey = `question-${examId}-${questionId}`;
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey) as Question;
     }
 
     try {

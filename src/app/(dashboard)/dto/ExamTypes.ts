@@ -49,7 +49,7 @@ export const AnswerSubmissionSchema = z.object({
  */
 export const QuizSessionUpdateSchema = z.object({
   currentQuestionIndex: z.number().int().min(0).optional(),
-  answers: z.record(z.string()).optional(), // Record<questionId, optionId>
+  answers: z.record(z.string(), z.string()).optional(), // Record<questionId, optionId>
   flaggedQuestions: z.array(z.number().int()).optional(),
   answeredQuestions: z.array(z.number().int()).optional(),
   timeElapsed: z.number().int().min(0).optional(),

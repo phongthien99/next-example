@@ -19,10 +19,10 @@ export default function TimedTestPage() {
           <h2 className="text-xl font-semibold mb-4">Test Configuration</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="test-duration" className="block text-sm font-medium text-gray-700 mb-2">
                 Test Duration
               </label>
-              <select className="w-full border rounded-md p-2">
+              <select id="test-duration" className="w-full border rounded-md p-2">
                 <option>120 minutes (Full TOEIC)</option>
                 <option>60 minutes (Half Test)</option>
                 <option>30 minutes (Quick Test)</option>
@@ -30,10 +30,10 @@ export default function TimedTestPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="num-questions" className="block text-sm font-medium text-gray-700 mb-2">
                 Number of Questions
               </label>
-              <select className="w-full border rounded-md p-2">
+              <select id="num-questions" className="w-full border rounded-md p-2">
                 <option>200 questions (Full TOEIC)</option>
                 <option>100 questions (Half Test)</option>
                 <option>50 questions (Quick Test)</option>

@@ -20,7 +20,7 @@ import {
   Map,
 } from "lucide-react";
 
-import { DashboardConfig, DashboardConfigSchema } from "@/app/dashboard/dto/DashboardTypes";
+import { DashboardConfig, DashboardConfigSchema } from "@/components/dashboard/dto/DashboardTypes";
 
 /**
  * Mock dashboard configuration data

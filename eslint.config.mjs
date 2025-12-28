@@ -67,6 +67,7 @@ const config = [
       "react/prop-types": "off", // Using TypeScript
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/set-state-in-effect": "off", // Allow setState in useEffect for initialization patterns
 
       // jsx-a11y rules (accessibility)
       "jsx-a11y/alt-text": "error",
