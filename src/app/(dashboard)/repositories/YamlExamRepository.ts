@@ -35,19 +35,19 @@ export class YamlExamRepository implements IExamRepository {
   }
 
   /**
-   * Initialize repository by loading YAML data via API
+   * Initialize repository by loading YAML data from public directory
    */
   private async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
     try {
-      // Fetch YAML data from API route
-      const response = await fetch('/api/exam/questions');
+      // Fetch YAML data directly from public directory
+      const response = await fetch('/data/questions.yaml');
       console.log('Fetched YAML data response:', response);
       if (!response.ok) {
         throw new Error(`Failed to fetch questions: ${response.status}`);
       }
-      
+
       const yamlContent = await response.text();
       const data = parse(yamlContent) as YamlData;
 
@@ -69,7 +69,7 @@ export class YamlExamRepository implements IExamRepository {
 
       this.isInitialized = true;
     } catch (error) {
-      console.error('Failed to load YAML data via API:', error);
+      console.error('Failed to load YAML data from public directory:', error);
       throw new Error('Failed to initialize YAML repository');
     }
   }

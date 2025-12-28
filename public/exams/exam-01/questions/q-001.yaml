@@ -1,0 +1,75 @@
+# Question 1 - Part 1: Photographs
+id: "q-001"
+examId: "exam-01"
+partId: "part-01"
+questionNumber: 1
+type: "single-choice"
+
+# Question Content
+content: |
+  Look at the picture and listen to the four statements. Select the statement that best describes the picture.
+
+# Media Assets
+assets:
+  image: "/exams/exam-01/assets/images/part-01/q-001.jpg"
+  audio: "/exams/exam-01/assets/audio/part-01/q-001.mp3"
+  # Audio transcript (not shown to students during test)
+  audioScript: |
+    (A) They're looking at a computer screen.
+    (B) They're sitting at separate desks.
+    (C) They're working on a presentation.
+    (D) They're standing in a meeting room.
+
+# Answer Options
+options:
+  - id: "A"
+    text: "They're looking at a computer screen."
+    audio: null # Audio is in the main audio file
+
+  - id: "B"
+    text: "They're sitting at separate desks."
+    audio: null
+
+  - id: "C"
+    text: "They're working on a presentation."
+    audio: null
+
+  - id: "D"
+    text: "They're standing in a meeting room."
+    audio: null
+
+# Correct Answer
+correctAnswer: "A"
+
+# Explanation (shown after answer)
+explanation: |
+  **Đáp án đúng: A - They're looking at a computer screen.**
+
+  Bức ảnh cho thấy hai người đang nhìn vào màn hình máy tính cùng nhau.
+
+  **Phân tích các đáp án:**
+  - (A) ✓ **Đúng** - Họ đang nhìn vào màn hình máy tính
+  - (B) ✗ Sai - Họ đang ngồi cùng nhau, không phải ở bàn riêng
+  - (C) ✗ Sai - Mặc dù họ có thể đang làm việc, nhưng không thể xác nhận đó là presentation
+  - (D) ✗ Sai - Họ đang ngồi, không đứng
+
+  **Mẹo làm bài:**
+  - Chú ý động từ và hành động chính trong ảnh
+  - Loại các đáp án mô tả sai vị trí hoặc hành động
+
+# Difficulty and Categorization
+difficulty: "easy"
+category: "listening-photographs"
+subcategory: "office-workplace"
+tags: ["office", "workplace", "computer", "teamwork"]
+skills: ["listening", "visual-comprehension"]
+
+# Points
+points: 1
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-05T10:00:00Z"
+createdBy: "content-team"
+reviewedBy: "quality-team"
+status: "published"

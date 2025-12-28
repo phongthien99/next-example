@@ -1,0 +1,72 @@
+# Exam System Index
+# Version and metadata
+version: "1.0.0"
+lastUpdated: "2025-12-28T14:00:00Z"
+
+# List of all available exams
+exams:
+  - id: "exam-01"
+    title: "TOEIC Practice Test 01"
+    description: "Full-length TOEIC practice test with 7 parts covering listening and reading"
+    type: "toeic"
+    level: "intermediate"
+    totalQuestions: 200
+    duration: 120 # minutes
+    isActive: true
+    createdAt: "2025-01-01T00:00:00Z"
+    updatedAt: "2025-01-15T10:30:00Z"
+    tags: ["toeic", "listening", "reading", "practice"]
+    thumbnail: "/exams/exam-01/assets/images/thumbnail.jpg"
+
+  - id: "exam-02"
+    title: "TOEIC Practice Test 02"
+    description: "Advanced TOEIC test for score improvement"
+    type: "toeic"
+    level: "advanced"
+    totalQuestions: 200
+    duration: 120
+    isActive: true
+    createdAt: "2025-01-05T00:00:00Z"
+    updatedAt: "2025-01-20T14:20:00Z"
+    tags: ["toeic", "advanced", "practice"]
+    thumbnail: "/exams/exam-02/assets/images/thumbnail.jpg"
+
+# Supported exam types
+examTypes:
+  - id: "toeic"
+    name: "TOEIC"
+    description: "Test of English for International Communication"
+
+  - id: "ielts"
+    name: "IELTS"
+    description: "International English Language Testing System"
+
+  - id: "toefl"
+    name: "TOEFL"
+    description: "Test of English as a Foreign Language"
+
+  - id: "custom"
+    name: "Custom Quiz"
+    description: "User-created custom quizzes"
+
+# Difficulty levels
+levels:
+  - id: "beginner"
+    name: "Beginner"
+    description: "For learners starting out"
+    scoreRange: "0-400"
+
+  - id: "intermediate"
+    name: "Intermediate"
+    description: "For learners with basic knowledge"
+    scoreRange: "405-600"
+
+  - id: "advanced"
+    name: "Advanced"
+    description: "For experienced learners"
+    scoreRange: "605-780"
+
+  - id: "expert"
+    name: "Expert"
+    description: "For near-native speakers"
+    scoreRange: "785-990"

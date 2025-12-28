@@ -19,8 +19,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useLogin } from "@/app/login/hooks/UseLogin";
-import { validateLogin } from "@/app/login/usecases/LoginLogic";
+import { useLogin } from "@/app/(auth)/login/hooks/UseLogin";
+import { validateLogin } from "@/app/(auth)/login/usecases/LoginLogic";
 import { AuthSession } from "../entities/AuthSession";
 
 export function LoginForm({

@@ -4,9 +4,9 @@ import path from 'path';
 
 export async function GET() {
   try {
-    const yamlPath = path.join(process.cwd(), 'src/app/(exam)/data/questions.yaml');
+    const yamlPath = path.join(process.cwd(), 'public/data/questions.yaml');
     const yamlContent = await fs.readFile(yamlPath, 'utf8');
-    
+
     return new NextResponse(yamlContent, {
       status: 200,
       headers: {

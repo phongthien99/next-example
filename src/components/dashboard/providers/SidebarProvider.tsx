@@ -10,11 +10,11 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { ISidebarStateRepository } from '@/components/dashboard/repositories/ISidebarStateRepository';
-import { LocalStorageSidebarStateRepository } from '@/components/dashboard/repositories/LocalStorageSidebarStateRepository';
-import { InMemorySidebarStateRepository } from '@/components/dashboard/repositories/InMemorySidebarStateRepository';
-import { SidebarState } from '@/components/dashboard/dto/DashboardTypes';
-import { getDefaultSidebarState } from '@/components/dashboard/core/ValidationFunctions';
+import { ISidebarStateRepository } from '../repositories/ISidebarStateRepository';
+import { LocalStorageSidebarStateRepository } from '../repositories/LocalStorageSidebarStateRepository';
+import { InMemorySidebarStateRepository } from '../repositories/InMemorySidebarStateRepository';
+import { SidebarState } from '../dto/DashboardTypes';
+import { getDefaultSidebarState } from '../core/ValidationFunctions';
 
 /**
  * Context value interface

@@ -1,0 +1,73 @@
+# Question 101 - Part 5: Incomplete Sentences
+id: "q-101"
+examId: "exam-01"
+partId: "part-05"
+questionNumber: 101
+type: "single-choice"
+
+# Question Content
+content: |
+  The marketing team _______ a comprehensive strategy for the new product launch next month.
+
+# No media assets for reading questions
+assets: null
+
+# Answer Options
+options:
+  - id: "A"
+    text: "develops"
+
+  - id: "B"
+    text: "developed"
+
+  - id: "C"
+    text: "will develop"
+
+  - id: "D"
+    text: "has developed"
+
+# Correct Answer
+correctAnswer: "D"
+
+# Explanation
+explanation: |
+  **Đáp án đúng: D - has developed**
+
+  Câu này sử dụng thì hiện tại hoàn thành vì chiến lược đã được hoàn thành trong quá khứ nhưng có liên quan đến tình huống hiện tại (sự ra mắt sản phẩm sắp tới vào tháng sau).
+
+  **Điểm ngữ pháp:** Thì Hiện tại Hoàn thành (Present Perfect Tense)
+  - Cấu trúc: has/have + past participle
+  - Cách dùng: Hành động hoàn thành trong quá khứ có ảnh hưởng đến hiện tại
+
+  **Tại sao các đáp án khác sai:**
+  - (A) "develops" - Thì hiện tại đơn không phù hợp với ngữ cảnh
+  - (B) "developed" - Thì quá khứ đơn ngụ ý không còn liên quan đến hiện tại
+  - (C) "will develop" - Thì tương lai mâu thuẫn với việc chiến lược đã sẵn sàng
+
+  **Dịch:**
+  Nhóm marketing đã phát triển một chiến lược toàn diện cho việc ra mắt sản phẩm mới vào tháng tới.
+
+# Difficulty and Categorization
+difficulty: "intermediate"
+category: "grammar-verb-tenses"
+subcategory: "present-perfect"
+tags: ["present-perfect", "verb-tenses", "grammar", "business-english"]
+skills: ["grammar", "verb-usage", "tense-recognition"]
+
+# Grammar Focus
+grammarPoint:
+  topic: "Present Perfect Tense"
+  rule: "has/have + past participle for actions completed in the past with present relevance"
+  commonMistakes:
+    - "Using simple past instead of present perfect"
+    - "Confusing present perfect with future tense"
+
+# Points
+points: 1
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-05T10:00:00Z"
+createdBy: "content-team"
+reviewedBy: "grammar-specialist"
+status: "published"

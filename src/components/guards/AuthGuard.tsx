@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { AuthSession } from "@/app/login/entities/AuthSession";
+import { AuthSession } from "@/app/(auth)/login/entities/AuthSession";
 
 /**
  * AuthGuard Component - Client-side Route Protection

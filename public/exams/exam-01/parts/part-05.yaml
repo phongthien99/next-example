@@ -1,0 +1,63 @@
+# Part 5: Incomplete Sentences
+id: "part-05"
+examId: "exam-01"
+order: 5
+title: "Incomplete Sentences"
+description: "Complete the sentences by selecting the best word or phrase from the four options"
+type: "reading"
+
+# Structure
+totalQuestions: 30
+timeLimit: null # Uses exam's total time
+
+# Instructions
+instructions: |
+  Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
+
+# Question IDs (references to questions/ directory)
+questionIds:
+  - "q-101"
+  - "q-102"
+  - "q-103"
+  - "q-104"
+  - "q-105"
+  - "q-106"
+  - "q-107"
+  - "q-108"
+  - "q-109"
+  - "q-110"
+  - "q-111"
+  - "q-112"
+  - "q-113"
+  - "q-114"
+  - "q-115"
+  - "q-116"
+  - "q-117"
+  - "q-118"
+  - "q-119"
+  - "q-120"
+  - "q-121"
+  - "q-122"
+  - "q-123"
+  - "q-124"
+  - "q-125"
+  - "q-126"
+  - "q-127"
+  - "q-128"
+  - "q-129"
+  - "q-130"
+
+# Settings
+settings:
+  hasAudio: false
+  hasImage: false
+  hasPassage: false
+  showTranscript: false
+
+# Scoring
+pointsPerQuestion: 1
+totalPoints: 30
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-10T15:00:00Z"

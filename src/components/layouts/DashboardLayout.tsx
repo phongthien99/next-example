@@ -6,7 +6,7 @@ import {
   SidebarProvider as UISidebarProvider,
 } from "@/components/ui/sidebar";
 import { SidebarProvider } from "@/providers/SidebarProvider";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { AppSidebar } from "@/components/dashboard/components/app-sidebar";
 
 /**
  * DashboardLayout - Shared Layout Component

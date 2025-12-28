@@ -14,8 +14,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { mockDashboardConfig } from "@/data/mockDashboardConfig";
-import { AuthSession } from "@/app/login/entities/AuthSession";
+import { mockDashboardConfig } from "../data/mockDashboardConfig";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Transform domain data to match component prop interfaces
@@ -24,6 +23,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     logo: logo as React.ElementType,
     plan,
   }));
+
+  const dashboardConfig = mockDashboardConfig;
 
   const navMain = mockDashboardConfig.navMain.map(
     ({ title, url, icon, isActive, items }) => ({
@@ -41,24 +42,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     icon: icon as LucideIcon,
   }));
 
-  // Lấy user từ localStorage thay vì mock data
-  const [user, setUser] = React.useState({
+  const user = {
     name: mockDashboardConfig.user.name,
     email: mockDashboardConfig.user.email,
     avatar: mockDashboardConfig.user.avatar,
-  });
-
-  React.useEffect(() => {
-    // Load user từ localStorage
-    const session = AuthSession.load();
-    if (session?.user) {
-      setUser({
-        name: session.user.name || session.user.email.split("@")[0],
-        email: session.user.email,
-        avatar: mockDashboardConfig.user.avatar, // Giữ avatar mặc định
-      });
-    }
-  }, []);
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -67,7 +55,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
-        <NavProjects projects={projects} />
+        {/* <NavProjects projects={projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

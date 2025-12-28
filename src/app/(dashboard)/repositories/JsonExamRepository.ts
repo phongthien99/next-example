@@ -40,12 +40,12 @@ export class JsonExamRepository implements IExamRepository {
     if (this.isInitialized) return;
 
     try {
-      // Load JSON data via fetch - works on client-side
-      const response = await fetch('/exam/data/questions.json');
+      // Load JSON data via fetch from public directory - works on client-side
+      const response = await fetch('/data/questions.json');
       if (!response.ok) {
         throw new Error(`Failed to fetch questions: ${response.status}`);
       }
-      
+
       const data: JsonData = await response.json();
 
       // Convert JSON data to Question objects

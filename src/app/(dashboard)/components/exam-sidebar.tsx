@@ -21,7 +21,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { AuthSession } from "@/app/login/entities/AuthSession";
+import { AuthSession } from "@/app/(auth)/login/entities/AuthSession";
 
 /**
  * ExamSidebar Component

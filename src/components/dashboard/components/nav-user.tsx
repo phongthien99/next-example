@@ -8,7 +8,6 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react"
-import { useRouter } from "next/navigation"
 
 import {
   Avatar,
@@ -30,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { AuthSession } from "@/app/login/entities/AuthSession"
 
 export function NavUser({
   user,
@@ -42,20 +40,6 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-  const router = useRouter()
-
-  const handleLogout = () => {
-    try {
-      // Xóa session khỏi localStorage
-      AuthSession.clear()
-      // Redirect về trang login
-      router.push("/login")
-    } catch (error) {
-      console.error("Logout error:", error)
-      // Vẫn redirect về login ngay cả khi có lỗi
-      router.push("/login")
-    }
-  }
 
   return (
     <SidebarMenu>
@@ -96,7 +80,7 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
+            <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
                 Upgrade to Pro
@@ -117,8 +101,8 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
               <LogOut />
               Log out
             </DropdownMenuItem>

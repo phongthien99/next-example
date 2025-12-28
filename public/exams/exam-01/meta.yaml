@@ -1,0 +1,126 @@
+# Exam Metadata
+id: "exam-01"
+title: "TOEIC Practice Test 01"
+description: "Full-length TOEIC practice test covering all 7 parts - Listening and Reading"
+type: "toeic"
+level: "intermediate"
+version: "1.0.0"
+
+# Timing
+duration: 120 # minutes
+totalTime: 7200 # seconds
+
+# Structure
+totalParts: 7
+totalQuestions: 200
+
+# Scoring
+passingScore: 400
+maxScore: 990
+scoringRules:
+  listening:
+    minScore: 5
+    maxScore: 495
+    parts: ["part-01", "part-02", "part-03", "part-04"]
+    totalQuestions: 100
+  reading:
+    minScore: 5
+    maxScore: 495
+    parts: ["part-05", "part-06", "part-07"]
+    totalQuestions: 100
+
+# Parts Configuration
+parts:
+  - id: "part-01"
+    order: 1
+    title: "Photographs"
+    description: "Listen and select the statement that best describes the photograph"
+    type: "listening"
+    totalQuestions: 6
+    timeLimit: null # no individual time limit
+
+  - id: "part-02"
+    order: 2
+    title: "Question-Response"
+    description: "Listen to a question and select the best response"
+    type: "listening"
+    totalQuestions: 25
+    timeLimit: null
+
+  - id: "part-03"
+    order: 3
+    title: "Conversations"
+    description: "Listen to conversations and answer questions"
+    type: "listening"
+    totalQuestions: 39
+    timeLimit: null
+
+  - id: "part-04"
+    order: 4
+    title: "Short Talks"
+    description: "Listen to talks and answer questions"
+    type: "listening"
+    totalQuestions: 30
+    timeLimit: null
+
+  - id: "part-05"
+    order: 5
+    title: "Incomplete Sentences"
+    description: "Complete the sentences with the best option"
+    type: "reading"
+    totalQuestions: 30
+    timeLimit: null
+
+  - id: "part-06"
+    order: 6
+    title: "Text Completion"
+    description: "Complete the texts with appropriate words or phrases"
+    type: "reading"
+    totalQuestions: 16
+    timeLimit: null
+
+  - id: "part-07"
+    order: 7
+    title: "Reading Comprehension"
+    description: "Read passages and answer comprehension questions"
+    type: "reading"
+    totalQuestions: 54
+    timeLimit: null
+
+# Instructions
+generalInstructions: |
+  This is a full-length TOEIC practice test. The test has seven sections:
+
+  LISTENING TEST (Parts 1-4): 45 minutes, 100 questions
+  READING TEST (Parts 5-7): 75 minutes, 100 questions
+
+  You must mark all your answers on the answer sheet. Do not write in the test book.
+
+# Settings
+settings:
+  allowReview: true # Allow review after submission
+  showExplanation: true # Show explanations after completion
+  shuffleQuestions: false # Don't shuffle questions (TOEIC has fixed order)
+  shuffleOptions: false # Don't shuffle answer options
+  allowSkip: true # Allow skipping questions
+  showTimer: true # Show countdown timer
+  autoSubmit: true # Auto-submit when time is up
+  allowPause: true # Allow pausing the test
+  showProgress: true # Show progress indicator
+  saveProgress: true # Save progress automatically
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-15T10:30:00Z"
+createdBy: "admin"
+publishedAt: "2025-01-15T10:30:00Z"
+tags: ["toeic", "listening", "reading", "practice", "intermediate"]
+isActive: true
+isPublished: true
+isFeatured: false
+
+# Statistics (optional - for tracking)
+stats:
+  totalAttempts: 0
+  averageScore: 0
+  completionRate: 0

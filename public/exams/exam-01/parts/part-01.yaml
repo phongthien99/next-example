@@ -1,0 +1,45 @@
+# Part 1: Photographs
+id: "part-01"
+examId: "exam-01"
+order: 1
+title: "Photographs"
+description: "Listen to four statements about a photograph and select the one that best describes what you see"
+type: "listening"
+
+# Structure
+totalQuestions: 6
+timeLimit: null # Uses exam's total time
+
+# Instructions
+instructions: |
+  Directions: For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer.
+
+  The statements will not be printed in your test book and will be spoken only one time.
+
+# Question IDs (references to questions/ directory)
+questionIds:
+  - "q-001"
+  - "q-002"
+  - "q-003"
+  - "q-004"
+  - "q-005"
+  - "q-006"
+
+# Settings
+settings:
+  hasAudio: true
+  hasImage: true
+  hasPassage: false
+  autoPlayAudio: false
+  allowAudioReplay: true
+  maxAudioReplays: 2
+  showTranscript: false # Don't show transcript during test
+  showOptionsText: false # Options are only in audio
+
+# Scoring
+pointsPerQuestion: 1
+totalPoints: 6
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-10T15:00:00Z"

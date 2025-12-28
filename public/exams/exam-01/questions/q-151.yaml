@@ -1,0 +1,113 @@
+# Question 151 - Part 7: Reading Comprehension
+id: "q-151"
+examId: "exam-01"
+partId: "part-07"
+questionNumber: 151
+type: "single-choice"
+
+# Passage Information
+passage:
+  id: "passage-01"
+  type: "email"
+  title: "Email about Company Retreat"
+  content: |
+    From: sarah.johnson@techcorp.com
+    To: all-staff@techcorp.com
+    Subject: Annual Company Retreat - June 15-17
+    Date: May 15, 2025
+
+    Dear Team,
+
+    I'm excited to announce that our annual company retreat will be held at the Seaside Resort from June 15-17. All employees are required to attend the orientation session on the first day at 9:00 AM.
+
+    Lunch will be provided on all three days, and we have planned exciting team-building activities for the afternoons. The retreat will conclude with an awards dinner on the final evening.
+
+    Please confirm your attendance by May 30th by replying to this email. If you have any dietary restrictions, please let us know in your response.
+
+    Looking forward to seeing everyone there!
+
+    Best regards,
+    Sarah Johnson
+    HR Director
+
+# Question Content
+content: |
+  What is the main purpose of this email?
+
+# No additional assets
+assets: null
+
+# Answer Options
+options:
+  - id: "A"
+    text: "To announce a vacation policy change"
+
+  - id: "B"
+    text: "To inform employees about a company retreat"
+
+  - id: "C"
+    text: "To schedule a meeting with management"
+
+  - id: "D"
+    text: "To advertise a new resort"
+
+# Correct Answer
+correctAnswer: "B"
+
+# Explanation
+explanation: |
+  **Đáp án đúng: B - To inform employees about a company retreat**
+
+  Subject line của email "Annual Company Retreat" và câu mở đầu rõ ràng nêu mục đích là thông báo về kỳ nghỉ của công ty.
+
+  **Phân tích các đáp án:**
+  - (A) ✗ Sai - Không đề cập đến chính sách nghỉ phép
+  - (B) ✓ **Đúng** - Email thông báo về company retreat
+  - (C) ✗ Sai - Đây là retreat, không phải meeting với quản lý
+  - (D) ✗ Sai - Email dành cho nhân viên, không phải quảng cáo resort
+
+  **Kỹ năng đọc hiểu:**
+  - Xác định mục đích chính qua subject line và câu mở đầu
+  - Phân biệt thông tin chính và thông tin phụ
+  - Loại trừ các đáp án không được đề cập
+
+  **Từ vựng quan trọng:**
+  - retreat (n): kỳ nghỉ dưỡng của công ty
+  - orientation session: buổi định hướng
+  - team-building activities: hoạt động xây dựng đội nhóm
+
+# Difficulty and Categorization
+difficulty: "easy"
+category: "reading-comprehension"
+subcategory: "email-main-idea"
+tags: ["email", "main-idea", "business-communication", "workplace"]
+skills: ["reading", "comprehension", "identifying-purpose", "skimming"]
+
+# Reading Skills
+readingSkills:
+  - "Identifying main idea"
+  - "Understanding email format"
+  - "Recognizing purpose"
+
+# Related Questions (same passage)
+relatedQuestions:
+  - id: "q-152"
+    content: "When is the deadline to confirm attendance?"
+  - id: "q-153"
+    content: "What time is the orientation session?"
+
+# Passage Details
+passageInfo:
+  wordCount: 102
+  readingLevel: "intermediate"
+  genre: "business-email"
+
+# Points
+points: 1
+
+# Metadata
+createdAt: "2025-01-01T00:00:00Z"
+updatedAt: "2025-01-05T10:00:00Z"
+createdBy: "content-team"
+reviewedBy: "reading-specialist"
+status: "published"
